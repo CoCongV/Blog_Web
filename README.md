@@ -1,7 +1,7 @@
 # flask_blog
 
 > A Vue.js project, vuex + vue-resource + vue2-editor + vue-cookie + muse-ui + js-md5
-
+> Demo: [Blog](http://45.32.78.128, "Blog")
 ## Build Setup
 
 ``` bash
