@@ -26,7 +26,15 @@
       </div>
     </mu-content-block>
     <mu-card-actions class="article-button">
-      <mu-icon-button icon="delete" @click="deleteEvent" v-show="deletePermission"/>
+      <mu-icon-button
+        icon="mode_edit"
+        :to="{
+            name: 'edit',
+            params: {
+              'id': post.post_id
+            }
+        }"></mu-icon-button>
+      <mu-icon-button icon="delete" @click="deleteEvent" v-show="postPermission"/>
       <mu-checkbox class="demo-checkbox" uncheckIcon="favorite_border" checkedIcon="favorite"/> <br/>
     </mu-card-actions>
   </mu-card>
@@ -37,7 +45,7 @@
   export default {
     props: {
       post: '',
-      deletePermission: ''
+      postPermission: ''
     },
     methods: {
       deleteEvent: function () {

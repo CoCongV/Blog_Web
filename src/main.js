@@ -21,8 +21,8 @@ Vue.use(VueParticles)
 /* http setup */
 Vue.config.productionTip = false
 Vue.http.interceptors.push((request, next) => {
-  // let oldUrl = request.url
-  // request.url = 'http://localhost:5000' + oldUrl
+  let oldUrl = request.url
+  request.url = 'http://localhost:5000' + oldUrl
   if (store.state.login) {
     request.headers.set('Authorization', 'token ' + Vue.cookie.get('token'))
   }

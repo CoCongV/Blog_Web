@@ -91,6 +91,8 @@
             response.data.token,
             {expires: response.data.expiration + 's'}
           )
+          this.$store.commit('login')
+          this.$store.commit('permission', response.data.permission)
           this.$router.push({name: 'index'})
         }, (response) => {
           if (response.status === status.USER_EXIST) {

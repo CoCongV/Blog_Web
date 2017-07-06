@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    {{ showBody }}
     <vue-editor v-model="body"></vue-editor>
   </div>
 </template>
@@ -12,12 +13,18 @@
     },
     data: function () {
       return {
-        body: this.content,
+        body: '',
         reply: ''
       }
     },
     components: {
       VueEditor
+    },
+    computed: {
+      showBody: function () {
+        console.log(this.content)
+        this.body = this.content
+      }
     }
   }
 </script>

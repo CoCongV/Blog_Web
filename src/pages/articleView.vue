@@ -5,7 +5,7 @@
       <mu-col width="90" tablet="80" desktop="50">
         <mu-flexbox orient="vertical">
           <mu-flexbox-item>
-            <moon-article :post="post" :deletePermission="permission" @deleteEvent="deletePost"></moon-article>
+            <moon-article :post="post" :postPermission="permission" @deleteEvent="deletePost"></moon-article>
           </mu-flexbox-item>
           <mu-flexbox-item>
             <mu-card v-for="comment in comments" :key="comment.id">
@@ -37,21 +37,21 @@
       return {
         post: '',
         comments: '',
-        deletePermission: '',
+        postPermission: false,
         total: 0,
         current: 1
       }
     },
-    mounted: function () {
+    created: function () {
       this.$http.get(this.$route.query.url).then((response) => {
         this.post = response.data.post
-        this.deletePermission = response.data.delete_permission
+        this.postPermission = response.data.delete_permission
       }, (response) => {
         console.log(response)
       })
       this.$http.get(api.comment, {
         params: {
-          post: this.$route.params.id
+          post_id: this.$route.params.id
         }
       }).then((response) => {
         this.comments = response.data.comments
@@ -62,10 +62,18 @@
     },
     computed: {
       permission: function () {
-        if (!this.$store.state.login) {
-          this.deletePermission = false
-        }
-        return this.deletePermission
+        if (!this.post) return this.postPermission
+        this.$http.get(
+          api.postPermission,
+          {
+            params: {
+              post_id: this.post.post_id
+            }
+          }
+        ).then((response) => {
+          this.postPermission = true
+        })
+        return this.postPermission
       }
     },
     components: {
