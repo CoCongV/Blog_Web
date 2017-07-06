@@ -1,32 +1,41 @@
 <template>
-  <mu-appbar>
-    <mu-flat-button label="Blog" icon="home" slot="left" :to="{name: 'index'}" primary/>
-    <mu-text-field
-      name="input"
-      icon="search"
-      class="appbar-search-field"
-      slot="right"
-      hintText="请输入搜索内容"
-      v-model="searchData"
-      @keyup.enter.native="search"
-    />
-    <mu-flat-button v-show="loginState" v-bind:label="name" slot="right"/>
-    <mu-icon-menu icon="more_vert" slot="right">
-      <mu-menu-item v-show="!loginState" title="登录" @click="login"/>
-      <mu-menu-item v-show="!loginState" title="注册" @click="register" />
-      <mu-menu-item v-show="loginState" title="个人主页" @click="profile" />
-      <mu-menu-item v-show="permissionAuth" title="发表文章" @click="addPost" />
-      <mu-menu-item v-show="loginState" title="注销" @click="logout"/>
-    </mu-icon-menu>
-    <mu-snackbar
-      v-if="snackbar"
-      message="注销"
-      action="关闭"
-      @actionClick="hideSnackbar"
-      @close="hideSnackbar"
-      style="height: 20px; font-size: medium;"
-    />
-  </mu-appbar>
+  <div>
+    <mu-appbar>
+      <mu-icon-button icon="menu" slot="left" @click="toggle(true)"/>
+      <mu-flat-button label="Blog" slot="left" labelClass="home-label" @click="home"/>
+      <mu-flat-button v-show="loginState" v-bind:label="name" slot="right"/>
+      <mu-icon-menu icon="more_vert" slot="right">
+        <mu-menu-item v-show="!loginState" title="登录" @click="login"/>
+        <mu-menu-item v-show="!loginState" title="注册" @click="register" />
+        <mu-menu-item v-show="loginState" title="个人主页" @click="profile" />
+        <mu-menu-item v-show="permissionAuth" title="发表文章" @click="addPost" />
+        <mu-menu-item v-show="loginState" title="注销" @click="logout"/>
+      </mu-icon-menu>
+      <!--移除,使用全局组件-->
+      <mu-snackbar
+        v-if="snackbar"
+        message="注销"
+        action="关闭"
+        @actionClick="hideSnackbar"
+        @close="hideSnackbar"
+        style="height: 20px; font-size: medium;"
+      />
+    </mu-appbar>
+    <mu-drawer :open="open" :docked="docked" @close="toggle()">
+      <mu-list>
+        <mu-list-item>
+          <mu-text-field
+            name="input"
+            icon="search"
+            hintText="请输入搜索内容"
+            v-model="searchData"
+            @keyup.enter.native="search"
+          />
+        </mu-list-item>
+        <mu-list-item title="爬虫(dev)" @click="toggle()"/>
+      </mu-list>
+    </mu-drawer>
+  </div>
 </template>
 
 <script>
@@ -37,7 +46,9 @@
         title: 'blog',
         name: '',
         searchData: '',
-        snackbar: false
+        snackbar: false,
+        open: false,
+        docked: true
       }
     },
     mounted: function () {
@@ -50,8 +61,8 @@
       }
     },
     methods: {
-      Home: function () {
-        alert('home')
+      home () {
+        this.$router.push({name: 'index'})
       },
       logout: function () {
         this.snackbar = true
@@ -73,6 +84,7 @@
         this.$router.push({name: 'addPost'})
       },
       search: function () {
+        this.toggle()
         this.$router.push({name: 'result', query: {search: this.searchData}})
       },
       hideSnackbar () {
@@ -81,6 +93,10 @@
       },
       profile: function () {
         this.$router.push({name: 'profileIndex'})
+      },
+      toggle (flag) {
+        this.open = !this.open
+        this.docked = !flag
       }
     },
     computed: {
@@ -120,5 +136,8 @@
   }
   .demo-snackbar-button{
     margin: 12px;
+  }
+  .home-label {
+    font-size: 125% !important;
   }
 </style>
