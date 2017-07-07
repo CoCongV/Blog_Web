@@ -81,9 +81,8 @@
             this.$router.push({
               name: 'index'
             })
-//            window.location.reload()
           }, (response) => {
-            alert(response.data.error)
+            this.$store.commit('showToast', response.body.message | '登入失败')
           })
       }
     }

@@ -77,10 +77,7 @@
           this.error_email = '邮箱未验证'
         }
       }, (response) => {
-        this.toast = true
-        if (this.toastTimer) clearTimeout(this.toastTimer)
-        this.toastTimer = setTimeout(() => { this.toast = false }, 2000)
-        this.$router.push({name: 'index'})
+        this.showToast(response.data.message | '网络异常')
       })
     },
     methods: {
@@ -109,7 +106,7 @@
           this.initData()
           this.showToast('修改成功')
         }, (response) => {
-          console.log(response)
+          this.showToast('修改失败')
         })
       },
       submitPassword: function () {
@@ -136,22 +133,13 @@
           this.$store.commit('logout')
           this.$store.commit('permission', 0)
           this.$cookie.delete('token')
-          localStorage.removeItem('login')
           this.$router.push({name: 'login'})
         }, (response) => {
           this.showToast('更新失败')
-          console.log(response)
         })
       },
       showToast: function (msg) {
-        console.log(msg)
-        this.message = msg
-        this.toast = true
-        if (this.toastTimer) clearTimeout(this.toastTimer)
-        this.toastTimer = setTimeout(() => {
-          this.toast = false
-          this.message = ''
-        }, 2000)
+        this.$store.commit('showToast', msg)
       },
       emailAuth: function () {
         this.$http.get(api.emailAuth).then((response) => {

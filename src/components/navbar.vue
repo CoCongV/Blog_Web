@@ -11,15 +11,6 @@
         <mu-menu-item v-show="permissionAuth" title="发表文章" @click="addPost" />
         <mu-menu-item v-show="loginState" title="注销" @click="logout"/>
       </mu-icon-menu>
-      <!--移除,使用全局组件-->
-      <mu-snackbar
-        v-if="snackbar"
-        message="注销"
-        action="关闭"
-        @actionClick="hideSnackbar"
-        @close="hideSnackbar"
-        style="height: 20px; font-size: medium;"
-      />
     </mu-appbar>
     <mu-drawer :open="open" :docked="docked" @close="toggle()">
       <mu-list>
@@ -65,13 +56,10 @@
         this.$router.push({name: 'index'})
       },
       logout: function () {
-        this.snackbar = true
-        if (this.snackTimer) clearTimeout(this.snackTimer)
-        this.snackTimer = setTimeout(() => { this.snackbar = false }, 2000)
+        this.$store.commit('showToast', '注销成功')
         this.$store.commit('logout')
         this.$store.commit('permission', 0)
         this.$cookie.delete('token')
-        localStorage.removeItem('login')
         this.$router.push({name: 'index'})
       },
       login: function () {

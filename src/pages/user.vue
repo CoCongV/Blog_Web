@@ -48,11 +48,7 @@
           }
         }).then((response) => {
           this.posts = response.data.posts
-        }, (response) => {
-          console.log(response)
         })
-      }, (response) => {
-        console.log(response)
       })
     }
   }

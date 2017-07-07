@@ -41,9 +41,7 @@
           }
         ).then((response) => {
           this.$router.push({name: 'post', params: {id: response.data.id}, query: {url: response.data.url}})
-        }, (response) => {
-          console.log(response)
-          alert('post fail')
+          this.$store.commit('showToast', response.data.message | '网络异常')
         })
       }
     }

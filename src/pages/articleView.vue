@@ -125,7 +125,7 @@
 </script>
 <style>
   .chip {
-    margin: 10px !important;
+    margin: 8px !important;
   }
   .article {
     margin-top: 8px;
