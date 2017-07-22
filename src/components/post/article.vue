@@ -28,6 +28,7 @@
     <mu-card-actions class="article-button">
       <mu-icon-button
         icon="mode_edit"
+        v-show="postPermission"
         :to="{
             name: 'edit',
             params: {

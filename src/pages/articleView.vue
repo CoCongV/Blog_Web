@@ -10,7 +10,7 @@
           <mu-flexbox-item>
             <mu-card v-for="comment in comments" :key="comment.id">
               <mu-card-header :title="comment.author" :subTitle="comment.timestamp">
-              <mu-avatar src="/static/uicon.png" slot="avatar"/>
+              <mu-avatar :src="comment.avatar" slot="avatar"/>
               </mu-card-header>
               <mu-divider />
               <mu-card-text v-html="comment.body_html">
