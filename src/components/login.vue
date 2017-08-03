@@ -82,7 +82,7 @@
               name: 'index'
             })
           }, (response) => {
-            this.$store.commit('showToast', response.body.message | '登入失败')
+            this.$store.commit('showToast', response.data.message)
           })
       }
     }

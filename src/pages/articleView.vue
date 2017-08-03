@@ -87,7 +87,7 @@
           api.comment,
           {
             params: {
-              post: this.post.post_id
+              post_id: this.post.post_id
             }
           }
         ).then((response) => {

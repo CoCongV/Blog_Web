@@ -10,7 +10,7 @@
 </template>
 
 <script>
-  import editor from '../comment/editor.vue'
+  import editor from '../comment/comment_editor.vue'
   import api from '@/services/api'
   export default {
     props: ['post'],
@@ -32,7 +32,7 @@
           {
             post: this.post,
             reply: this.$refs.editor.reply,
-            body: this.$refs.editor.body
+            body: this.$refs.editor.content
           }
         ).then((response) => {
           this.$emit('submit')

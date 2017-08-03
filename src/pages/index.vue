@@ -36,7 +36,7 @@
         current: 1
       }
     },
-    created: function () {
+    mounted: function () {
       this.$http.get(api.posts).then((response) => {
         this.posts = response.data.posts
         this.total = response.data.count
