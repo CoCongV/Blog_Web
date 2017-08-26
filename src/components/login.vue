@@ -64,7 +64,7 @@
           this.error_password = '密码为空'
           return
         }
-        this.$http.post(
+        this.axios.post(
           api.login,
           {
             email: this.email,
@@ -81,8 +81,8 @@
             this.$router.push({
               name: 'index'
             })
-          }, (response) => {
-            this.$store.commit('showToast', response.data.message)
+          }).catch((error) => {
+            this.$store.commit('showToast', error.response.data.message)
           })
       }
     }

@@ -32,7 +32,7 @@
       'moon-editor': editor
     },
     mounted: function () {
-      this.$http.get(
+      this.axios.get(
         api.post,
         {
           params: {
@@ -47,7 +47,7 @@
     },
     methods: {
       submit () {
-        this.$http.put(
+        this.axios.put(
           api.post,
           {
             title: this.title,

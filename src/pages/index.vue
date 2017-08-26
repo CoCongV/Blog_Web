@@ -37,7 +37,7 @@
       }
     },
     mounted: function () {
-      this.$http.get(api.posts).then((response) => {
+      this.axios.get(api.posts).then((response) => {
         this.posts = response.data.posts
         this.total = response.data.count
       })
@@ -51,7 +51,7 @@
         alert(1)
       },
       handleClick (newIndex) {
-        this.$http.get(
+        this.axios.get(
           api.posts,
           {
             params: {
@@ -62,8 +62,8 @@
           this.posts = response.data.posts
           this.total = response.data.count
           this.pageScroll()
-        }, (response) => {
-          this.$store.commit('showToast', '网络异常')
+        }).catch((error) => {
+          this.$store.commit('showToast', error.response.data.message | 'Network anomaly')
         })
       },
       pageScroll: function () {

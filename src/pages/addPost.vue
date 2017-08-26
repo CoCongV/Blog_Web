@@ -32,7 +32,7 @@
     },
     methods: {
       submit: function () {
-        this.$http.post(
+        this.axios.post(
           api.post,
           {
             title: this.title,
@@ -42,6 +42,9 @@
         ).then((response) => {
           this.$router.push({name: 'post', params: {id: response.data.id}, query: {url: response.data.url}})
           this.$store.commit('showToast', '发表成功')
+        }).catch((error) => {
+          console.log(error)
+          this.$split.commit('showToast', error.data.message)
         })
       }
     }
