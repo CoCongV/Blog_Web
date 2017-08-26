@@ -64,7 +64,7 @@
       }
     },
     mounted: function () {
-      this.$http.get(
+      this.axios.get(
         api.user,
         {
           headers: {
@@ -76,8 +76,8 @@
         if (!this.info.confirmed) {
           this.error_email = '邮箱未验证'
         }
-      }, (response) => {
-        this.showToast(response.data.message | '网络异常')
+      }).catch((error) => {
+        this.showToast(error.response.data.message | '网络异常')
       })
     },
     methods: {
@@ -94,7 +94,7 @@
           this.error_email = '邮箱不能为空'
           return
         }
-        this.$http.put(
+        this.axios.put(
           api.user,
           {
             email: this.info.email,
@@ -105,7 +105,8 @@
         ).then((response) => {
           this.initData()
           this.showToast('修改成功')
-        }, (response) => {
+        }).catch((error) => {
+          console.log(error)
           this.showToast('修改失败')
         })
       },
@@ -122,7 +123,7 @@
           this.showToast('新旧密码不能相同')
           return
         }
-        this.$http.post(
+        this.axios.post(
           api.password,
           {
             old_password: this.old_password,
@@ -134,7 +135,8 @@
           this.$store.commit('permission', 0)
           this.$cookie.delete('token')
           this.$router.push({name: 'login'})
-        }, (response) => {
+        }).catch((error) => {
+          console.log(error)
           this.showToast('更新失败')
         })
       },
@@ -142,12 +144,12 @@
         this.$store.commit('showToast', msg)
       },
       emailAuth: function () {
-        this.$http.get(api.emailAuth).then((response) => {
+        this.axios.get(api.emailAuth).then((response) => {
           this.showToast('发送成功')
         })
       },
       initData: function () {
-        this.$http.get(
+        this.axios.get(
           api.user,
           {
             headers: {
@@ -159,7 +161,8 @@
           if (this.info.confirmed === 'False') {
             this.error_email = '邮箱未验证'
           }
-        }, (response) => {
+        }).catch((error) => {
+          console.log(error)
           this.toast = true
           if (this.toastTimer) clearTimeout(this.toastTimer)
           this.toastTimer = setTimeout(() => { this.toast = false }, 2000)
@@ -167,7 +170,7 @@
         })
       },
       verifyEmail: function () {
-        this.$http.get(
+        this.axios.get(
           api.emailExist,
           {
             params: {
@@ -176,12 +179,13 @@
           }
         ).then((respose) => {
           this.error_email = ''
-        }, (response) => {
+        }).catch((error) => {
+          console.log(error)
           this.error_email = '邮箱已存在'
         })
       },
       verifyUsername: function () {
-        this.$http.get(
+        this.axios.get(
           api.usernameExist,
           {
             params: {
@@ -190,7 +194,8 @@
           }
         ).then((response) => {
           this.error_username = ''
-        }, (response) => {
+        }).catch((error) => {
+          console.log(error)
           this.error_username = '用户名已被使用'
         })
       }

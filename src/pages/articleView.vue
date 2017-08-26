@@ -43,27 +43,27 @@
       }
     },
     created: function () {
-      this.$http.get(this.$route.query.url).then((response) => {
+      this.axios.get(this.$route.query.url).then((response) => {
         this.post = response.data.post
         this.postPermission = response.data.delete_permission
-      }, (response) => {
-        console.log(response)
+      }).catch((error) => {
+        console.log(error)
       })
-      this.$http.get(api.comment, {
+      this.axios.get(api.comment, {
         params: {
           post_id: this.$route.params.id
         }
       }).then((response) => {
         this.comments = response.data.comments
         this.total = response.data.count
-      }, (response) => {
-        console.log(response)
+      }).catch((error) => {
+        console.log(error)
       })
     },
     computed: {
       permission: function () {
         if (!this.post) return this.postPermission
-        this.$http.get(
+        this.axios.get(
           api.postPermission,
           {
             params: {
@@ -83,7 +83,7 @@
     },
     methods: {
       reloadComment: function () {
-        this.$http.get(
+        this.axios.get(
           api.comment,
           {
             params: {
@@ -95,7 +95,7 @@
         })
       },
       deletePost: function () {
-        this.$http.delete(
+        this.axios.delete(
           api.post,
           {
             params: {
@@ -107,7 +107,7 @@
         })
       },
       handleClick: function (newIndex) {
-        this.$http.get(
+        this.axios.get(
           api.comment,
           {
             params: {

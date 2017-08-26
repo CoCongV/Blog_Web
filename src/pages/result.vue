@@ -26,7 +26,7 @@
       }
     },
     mounted: function () {
-      this.$http.get(
+      this.axios.get(
         api.postSearch,
         {
           params: {...this.$route.query}

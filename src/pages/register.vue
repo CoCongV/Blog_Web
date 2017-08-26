@@ -77,7 +77,7 @@
           this.error_password = '密码过长,需小于20位'
           return
         }
-        this.$http.post(
+        this.axios.post(
           api.user,
           {
             email: this.email,
@@ -95,8 +95,8 @@
           this.$store.commit('login')
           this.$store.commit('permission', response.data.permission)
           this.$router.push({name: 'index'})
-        }, (response) => {
-          if (response.status === status.USER_EXIST) {
+        }).catch((error) => {
+          if (error.response.status === status.USER_EXIST) {
             this.$store.commit('showToast', '用户名或邮箱已被注册')
             return
           }
@@ -104,7 +104,7 @@
         })
       },
       verifyEmail: function () {
-        this.$http.get(
+        this.axios.get(
           api.emailExist,
           {
             params: {
@@ -113,12 +113,13 @@
           }
         ).then((respose) => {
           this.error_email = ''
-        }, (response) => {
+        }).catch((error) => {
+          console.log(error)
           this.error_email = '邮箱已存在'
         })
       },
       verifyUsername: function () {
-        this.$http.get(
+        this.axios.get(
           api.usernameExist,
           {
             params: {
@@ -127,7 +128,8 @@
           }
         ).then((response) => {
           this.error_username = ''
-        }, (response) => {
+        }).catch((error) => {
+          console.log(error)
           this.error_username = '用户名已被使用'
         })
       }

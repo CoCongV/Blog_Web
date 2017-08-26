@@ -44,10 +44,10 @@
     },
     mounted: function () {
       if (this.$store.state.login) {
-        this.$http.get(api.user).then((response) => {
+        this.axios.get(api.user).then((response) => {
           this.name = response.data.username
-        }, (response) => {
-          console.log(response)
+        }).catch((error) => {
+          console.log(error)
         })
       }
     },
@@ -90,7 +90,7 @@
     computed: {
       loginState: function () {
         if (this.$store.state.login) {
-          this.$http.get(api.user).then((response) => {
+          this.axios.get(api.user).then((response) => {
             this.name = response.data.username
           })
         } else {
