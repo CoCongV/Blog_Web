@@ -28,10 +28,9 @@
 </template>
 
 <script>
-  import article from '../components/post/article.vue'
-  import editor from '../components/comment/editor.vue'
-  import dialog from '../components/post/articleDialog.vue'
-  import api from '../services/api'
+  import article from '@/components/post/article.vue'
+  import dialog from '@/components/post/articleDialog.vue'
+  import api from '@/services/api'
   export default {
     data: function () {
       return {
@@ -77,7 +76,6 @@
       }
     },
     components: {
-      'moon-editor': editor,
       'moon-article': article,
       'moon-dialog': dialog
     },

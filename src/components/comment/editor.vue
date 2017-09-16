@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
     <vue-editor v-model="body"></vue-editor>
   </div>
 </template>
@@ -17,7 +17,7 @@
       }
     },
     components: {
-      VueEditor
+      'vue-editor': VueEditor
     }
   }
 </script>

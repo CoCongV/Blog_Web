@@ -64,6 +64,7 @@
           this.error_password = '密码为空'
           return
         }
+        console.log('post login')
         this.axios.post(
           api.login,
           {

@@ -17,5 +17,6 @@ export default {
   password: '/auth/password/',
   postPermission: '/auth/post_permission/',
   emailExist: '/auth/email_exist/',
-  usernameExist: '/auth/username_exist/'
+  usernameExist: '/auth/username_exist/',
+  upload: '/photo/'
 }

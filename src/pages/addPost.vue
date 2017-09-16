@@ -18,8 +18,8 @@
 </template>
 
 <script>
-  import editor from '../components/post/editor.vue'
-  import api from '../services/api'
+  import editor from '@/components/post/editor.vue'
+  import api from '@/services/api'
   export default {
     data: function () {
       return {

@@ -13,9 +13,10 @@
     </mu-list>
   </mobile-tear-sheet>
 </template>
+
 <script>
   import mobileTearSheet from './mobileTearSheet.vue'
-  import api from '../../services/api'
+  import api from '@/services/api'
   export default {
     data: function () {
       return {

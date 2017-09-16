@@ -26,15 +26,11 @@
       </div>
     </mu-content-block>
     <mu-card-actions class="article-button">
-      <mu-icon-button
+        <mu-icon-button
         icon="mode_edit"
         v-show="postPermission"
-        :to="{
-            name: 'edit',
-            params: {
-              'id': post.post_id
-            }
-        }"></mu-icon-button>
+        @click="toEdit">
+        </mu-icon-button>
       <mu-icon-button icon="delete" @click="deleteEvent" v-show="postPermission"/>
       <mu-checkbox class="demo-checkbox" uncheckIcon="favorite_border" checkedIcon="favorite"/> <br/>
     </mu-card-actions>
@@ -51,6 +47,19 @@
     methods: {
       deleteEvent: function () {
         this.$emit('deleteEvent')
+      },
+      userProfile () {
+        this.$router.push({
+          name: 'userProfile',
+          query: {
+            author_url: this.post.author_url
+          }
+        })
+      },
+      toEdit () {
+        this.$router.push(
+          {name: 'edit', params: {'id': this.post.post_id}}
+        )
       }
     },
     computed: {

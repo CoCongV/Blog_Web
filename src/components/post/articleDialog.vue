@@ -10,7 +10,7 @@
 </template>
 
 <script>
-  import editor from '../comment/comment_editor.vue'
+  import editor from '../comment/editor.vue'
   import api from '@/services/api'
   export default {
     props: ['post'],

@@ -65,6 +65,7 @@ export default {
   }
 }
 </script>
+
 <style>
 .particles {
   position: absolute;
