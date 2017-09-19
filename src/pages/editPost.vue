@@ -51,8 +51,9 @@
           api.post,
           {
             title: this.title,
-            content: this.body,
-            tags: this.tags
+            content: this.$refs.editor.body,
+            tags: this.tags,
+            post_id: this.$route.params.id
           }
         ).then((response) => {
           this.$router.push(

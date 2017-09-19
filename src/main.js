@@ -3,19 +3,21 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import store from './store'
+import axios from 'axios'
 import MuseUI from 'muse-ui'
 import 'muse-ui/dist/muse-ui.css'
 import 'muse-ui/dist/theme-teal.css'
 import VueCookie from 'vue-cookie'
 import Vuex from 'vuex'
 import VueParticles from 'vue-particles'
-import axios from 'axios'
-import store from './store'
+import VueHighlightJS from 'vue-highlightjs'
 
 Vue.use(MuseUI)
 Vue.use(VueCookie)
 Vue.use(Vuex)
 Vue.use(VueParticles)
+Vue.use(VueHighlightJS)
 Vue.prototype.axios = axios
 
 axios.interceptors.request.use(function (config) {
