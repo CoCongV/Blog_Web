@@ -32,7 +32,7 @@
           {
             post: this.post,
             reply: this.$refs.editor.reply,
-            body: this.$refs.editor.content
+            body: this.$refs.editor.body
           }
         ).then((response) => {
           this.$emit('submit')

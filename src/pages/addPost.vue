@@ -33,7 +33,7 @@
     methods: {
       submit: function () {
         this.axios.post(
-          api.post,
+          api.posts,
           {
             title: this.title,
             content: this.$refs.editor.body,
