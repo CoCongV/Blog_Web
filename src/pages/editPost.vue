@@ -33,12 +33,7 @@
     },
     mounted: function () {
       this.axios.get(
-        api.post,
-        {
-          params: {
-            id: this.$route.params.id
-          }
-        }
+        api.post.replace(':id', this.$route.params.id),
       ).then((response) => {
         this.title = response.data.post.title
         this.body = response.data.post.body
@@ -48,11 +43,11 @@
     methods: {
       submit () {
         this.axios.put(
-          api.post,
+          api.post.replace(':id', this.$route.params.id),
           {
             title: this.title,
             content: this.$refs.editor.body,
-            tags: this.tags,
+            tags: this.tags.split(' '),
             post_id: this.$route.params.id
           }
         ).then((response) => {

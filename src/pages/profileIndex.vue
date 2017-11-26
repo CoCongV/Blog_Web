@@ -94,7 +94,7 @@
           this.error_email = '邮箱不能为空'
           return
         }
-        this.axios.put(
+        this.axios.patch(
           api.user,
           {
             email: this.info.email,

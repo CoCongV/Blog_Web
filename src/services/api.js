@@ -4,9 +4,9 @@
 export default {
   login: '/user/login/',
   user: '/user/',
-  userProfile: '/user/profile/',
+  userProfile: '/user/profile/:id/',
   permission: '/user/permission',
-  post: '/post/',
+  post: '/post/:id/',
   posts: '/posts/',
   postSearch: '/search/',
   comment: '/comment/',

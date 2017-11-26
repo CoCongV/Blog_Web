@@ -94,12 +94,7 @@
       },
       deletePost: function () {
         this.axios.delete(
-          api.post,
-          {
-            params: {
-              post_id: this.post.post_id
-            }
-          }
+          api.post.replace(':id', this.post.post_id),
         ).then((response) => {
           this.$router.push({name: 'index'})
         })
