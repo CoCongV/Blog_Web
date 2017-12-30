@@ -4,7 +4,8 @@
     <mu-col width="100" tablet="50" desktop="50">
       <mu-card class="profile">
         <mu-card-header>
-          <mu-avatar :src="info.avatar" slot="avatar"/>
+          <!-- <mu-avatar :src="info.avatar" slot="avatar"/> -->
+          <moon-avatar :avatar="info.avatar"></moon-avatar>
         </mu-card-header>
         <mu-divider/>
         <mu-text-field label="用户名" hintext="用户名最长32个字符"
@@ -49,6 +50,7 @@
 
 <script>
   import api from '../services/api'
+  import userAvatar from '@/components/user/avatar'
   export default {
     data: function () {
       return {
@@ -62,6 +64,9 @@
         old_password: '',
         new_password: ''
       }
+    },
+    components: {
+      'moon-avatar': userAvatar
     },
     mounted: function () {
       this.axios.get(
