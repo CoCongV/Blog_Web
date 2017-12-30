@@ -39,7 +39,7 @@ export default {
       console.log(formData)
       this.axios(
         {
-          url: api.upload,
+          url: api.postImgUpload,
           method: 'POST',
           data: formData
         }

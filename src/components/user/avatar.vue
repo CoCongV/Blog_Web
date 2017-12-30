@@ -1,32 +1,33 @@
 <template>
-  <div>
-      <!-- <mu-avatar :src="avatar" slog="avatar" @click="toogelShow"/> -->
-      <a class="btn" @click="toogleShow">设置头像</a>
-      <my-upload field="img"
+  <mu-avatar>
+      {{ showAvatar }}
+      <moon-upload field="img"
       @crop-success="cropSuccess"
-      @crop-upload-success="cropUploadSeccuess"
-      @crop-upload-fail="cropUPloadFail"
+      @crop-upload-success="cropUploadSuccess"
+      @crop-upload-fail="cropUploadFail"
       v-model="show"
       :width="300"
       :height="300"
-      url="/upload"
       :params="params"
       :headers="headers"
-      img-format="png"></my-upload>
-      <img :src="avatar">
-  </div>
+      img-format="png"
+      ref="upload"></moon-upload>
+      <img :src="imgDataURL" @click="toogleShow">
+  </mu-avatar>
 </template>
 
 <script>
 import 'babel-polyfill'
-import myUpload from 'vue-image-crop-upload/upload-1.vue'
+import myUpload from 'vue-image-crop-upload'
+import data2blob from '@/components/data2blob.js'
+import api from '@/services/api'
 export default {
   props: {
-    avatar: ''
+    avatar: String
   },
   data () {
     return {
-      show: true,
+      show: false,
       params: {
         token: '123456',
         name: 'avatar'
@@ -34,25 +35,35 @@ export default {
       headers: {
         smail: '*_~'
       },
-      imgDataUrl: ''
+      imgDataURL: ''
     }
   },
   components: {
     'moon-upload': myUpload
   },
   methods: {
-    openAvatar () {
-      this.userAvatarDialog = true
-    },
-    closeAvatar () {
-      this.userAvatarDialog = false
-    },
-    toogelShow () {
+    toogleShow () {
       this.show = !this.show
     },
-    cropSuccess (imgDataUrl, field) {
+    cropSuccess (imgDataURL, field) {
       console.log('------------crop success ---------')
-      this.imgDataUrl = imgDataUrl
+      console.log(field)
+      this.imgDataURL = imgDataURL
+      let data = data2blob(imgDataURL, this.$refs.upload.mime)
+      console.log(data)
+      let formData = new FormData()
+      formData.append('image', data, field + '.' + this.$refs.upload.imgFormat)
+      this.axios(
+        {
+          url: api.userAvatarUpload,
+          method: 'PUT',
+          data: formData
+        }
+      ).then((result) => {
+        this.imgDataURL = result.url
+      }).catch((error) => {
+        console.log(error)
+      })
     },
     cropUploadSuccess (jsonData, field) {
       console.log('-------------upload success --------')
@@ -63,6 +74,11 @@ export default {
       console.log('--------- upload fail ---------')
       console.log(status)
       console.log('field: ' + field)
+    }
+  },
+  computed: {
+    showAvatar () {
+      this.imgDataURL = this.avatar
     }
   }
 }

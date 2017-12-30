@@ -4,7 +4,6 @@
     <mu-col width="100" tablet="50" desktop="50">
       <mu-card class="profile">
         <mu-card-header>
-          <!-- <mu-avatar :src="info.avatar" slot="avatar"/> -->
           <moon-avatar :avatar="info.avatar"></moon-avatar>
         </mu-card-header>
         <mu-divider/>
@@ -49,7 +48,7 @@
 </template>
 
 <script>
-  import api from '../services/api'
+  import api from '@/services/api'
   import userAvatar from '@/components/user/avatar'
   export default {
     data: function () {
@@ -71,11 +70,6 @@
     mounted: function () {
       this.axios.get(
         api.user,
-        {
-          headers: {
-            Authorization: 'token ' + this.$cookie.get('token')
-          }
-        }
       ).then((response) => {
         this.info = response.data
         if (!this.info.confirmed) {
@@ -156,11 +150,6 @@
       initData: function () {
         this.axios.get(
           api.user,
-          {
-            headers: {
-              Authorization: 'token ' + this.$cookie.get('token')
-            }
-          }
         ).then((response) => {
           this.info = response.data
           if (this.info.confirmed === 'False') {
