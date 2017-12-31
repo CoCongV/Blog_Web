@@ -40,7 +40,7 @@ export default {
       this.axios(
         {
           url: api.postImgUpload,
-          method: 'POST',
+          method: 'PUT',
           data: formData
         }
       ).then((result) => {
