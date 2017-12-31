@@ -27,7 +27,7 @@
         this.dialog = false
       },
       submit: function () {
-        this.$http.post(
+        this.axios.post(
           api.comment,
           {
             post: this.post,
@@ -37,7 +37,8 @@
         ).then((response) => {
           this.$emit('submit')
           this.dialog = false
-        }, (response) => {
+        }).catch((error) => {
+          console.log(error)
           this.$router.push({name: 'login'})
         })
       }

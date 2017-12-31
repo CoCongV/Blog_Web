@@ -39,20 +39,16 @@
       }
     },
     mounted: function () {
-      this.$http.get(this.$route.query.author_url).then((response) => {
+      this.axios.get(this.$route.query.author_url).then((response) => {
         this.info = response.data.user
         this.editPermission = response.data.edit_permission
-        this.$http.get(api.posts, {
+        this.axios.get(api.posts, {
           params: {
             uid: this.info.uid
           }
         }).then((response) => {
           this.posts = response.data.posts
-        }, (response) => {
-          console.log(response)
         })
-      }, (response) => {
-        console.log(response)
       })
     }
   }

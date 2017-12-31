@@ -9,6 +9,7 @@ import postView from '@/pages/articleView.vue'
 import userProfile from '@/pages/user.vue'
 import result from '@/pages/result.vue'
 import profileIndex from '@/pages/profileIndex.vue'
+import editPost from '@/pages/editPost.vue'
 
 Vue.use(Router)
 
@@ -62,6 +63,11 @@ export default new Router({
       path: '/results/',
       name: 'result',
       component: result
+    },
+    {
+      path: '/edit/:id(\\d+)',
+      name: 'edit',
+      component: editPost
     }
   ]
 })

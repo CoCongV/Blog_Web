@@ -26,7 +26,7 @@
       }
     },
     mounted: function () {
-      this.$http.get(
+      this.axios.get(
         api.postSearch,
         {
           params: {...this.$route.query}
@@ -34,6 +34,18 @@
       ).then((response) => {
         this.posts = response.data.posts
       })
+    },
+    watch: {
+      $route: function () {
+        this.axios.get(
+          api.postSearch,
+          {
+            params: {...this.$route.query}
+          }
+        ).then((response) => {
+          this.posts = response.data.posts
+        })
+      }
     },
     components: {
       'moon-article': article

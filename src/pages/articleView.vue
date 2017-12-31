@@ -5,12 +5,12 @@
       <mu-col width="90" tablet="80" desktop="50">
         <mu-flexbox orient="vertical">
           <mu-flexbox-item>
-            <moon-article :post="post" :deletePermission="permission" @deleteEvent="deletePost"></moon-article>
+            <moon-article :post="post" :postPermission="permission" @deleteEvent="deletePost"></moon-article>
           </mu-flexbox-item>
           <mu-flexbox-item>
             <mu-card v-for="comment in comments" :key="comment.id">
               <mu-card-header :title="comment.author" :subTitle="comment.timestamp">
-              <mu-avatar src="/static/uicon.png" slot="avatar"/>
+              <mu-avatar :src="comment.avatar" slot="avatar"/>
               </mu-card-header>
               <mu-divider />
               <mu-card-text v-html="comment.body_html">
@@ -28,58 +28,64 @@
 </template>
 
 <script>
-  import article from '../components/post/article.vue'
-  import editor from '../components/comment/editor.vue'
-  import dialog from '../components/post/articleDialog.vue'
-  import api from '../services/api'
+  import article from '@/components/post/article.vue'
+  import dialog from '@/components/post/articleDialog.vue'
+  import api from '@/services/api'
   export default {
     data: function () {
       return {
         post: '',
         comments: '',
-        deletePermission: '',
+        postPermission: false,
         total: 0,
         current: 1
       }
     },
-    mounted: function () {
-      this.$http.get(this.$route.query.url).then((response) => {
+    created: function () {
+      this.axios.get(this.$route.query.url).then((response) => {
         this.post = response.data.post
-        this.deletePermission = response.data.delete_permission
-      }, (response) => {
-        console.log(response)
+        this.postPermission = response.data.delete_permission
+      }).catch((error) => {
+        console.log(error)
       })
-      this.$http.get(api.comment, {
+      this.axios.get(api.comment, {
         params: {
-          post: this.$route.params.id
+          post_id: this.$route.params.id
         }
       }).then((response) => {
         this.comments = response.data.comments
         this.total = response.data.count
-      }, (response) => {
-        console.log(response)
+      }).catch((error) => {
+        console.log(error)
       })
     },
     computed: {
       permission: function () {
-        if (!this.$store.state.login) {
-          this.deletePermission = false
-        }
-        return this.deletePermission
+        if (!this.post) return this.postPermission
+        this.axios.get(
+          api.postPermission,
+          {
+            params: {
+              post_id: this.post.post_id
+            }
+          }
+        ).then((response) => {
+          this.postPermission = true
+        })
+        return this.postPermission
       }
     },
     components: {
-      'moon-editor': editor,
       'moon-article': article,
       'moon-dialog': dialog
     },
     methods: {
       reloadComment: function () {
-        this.$http.get(
+        this.axios.get(
           api.comment,
           {
             params: {
-              post: this.post.post_id
+              post_id: this.post.post_id
             }
           }
         ).then((response) => {
@@ -87,19 +93,14 @@
         })
       },
       deletePost: function () {
-        this.$http.delete(
-          api.post,
-          {
-            params: {
-              post_id: this.post.post_id
-            }
-          }
+        this.axios.delete(
+          api.post.replace(':id', this.post.post_id),
         ).then((response) => {
           this.$router.push({name: 'index'})
         })
       },
       handleClick: function (newIndex) {
-        this.$http.get(
+        this.axios.get(
           api.comment,
           {
             params: {
@@ -117,7 +118,7 @@
 </script>
 <style>
   .chip {
-    margin: 10px !important;
+    margin: 8px !important;
   }
   .article {
     margin-top: 8px;

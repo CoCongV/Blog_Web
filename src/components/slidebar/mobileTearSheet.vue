@@ -29,10 +29,4 @@
     border-bottom: none;
     overflow: hidden;
   }
-  /*.mobile-tear-sheet-bottom-tear {*/
-    /*display: block;*/
-    /*position: relative;*/
-    /*margin-top: -10;*/
-    /*max-width: 360;*/
-  /*}*/
 </style>

@@ -4,7 +4,7 @@
     <mu-col width="90" tablet="50" desktop="60">
       <mu-card class="editor">
         <mu-text-field label="标题" hintText="请输入标题" type="text" v-model="title" labelFloat/><br/>
-        <moon-editor ref="editor"></moon-editor>
+        <moon-editor ref="editor" :content="body"></moon-editor>
         <div class="tag-input">
           <mu-text-field label="标签" hintText="以空格进行切割" type="text" v-model="tags" labelFloat/><br/>
         </div>
@@ -18,47 +18,52 @@
 </template>
 
 <script>
-  import editor from '@/components/post/editor.vue'
+  import editor from '../components/post/editor.vue'
   import api from '@/services/api'
   export default {
     data: function () {
       return {
         title: '',
+        body: '',
         tags: ''
       }
     },
     components: {
       'moon-editor': editor
     },
+    mounted: function () {
+      this.axios.get(
+        api.post.replace(':id', this.$route.params.id),
+      ).then((response) => {
+        this.title = response.data.post.title
+        this.body = response.data.post.body
+        this.tags = response.data.post.tags
+      })
+    },
     methods: {
-      submit: function () {
-        this.axios.post(
-          api.posts,
+      submit () {
+        this.axios.put(
+          api.post.replace(':id', this.$route.params.id),
           {
             title: this.title,
             content: this.$refs.editor.body,
-            tags: this.tags.split(' ')
+            tags: this.tags.split(' '),
+            post_id: this.$route.params.id
           }
         ).then((response) => {
-          this.$router.push({name: 'post', params: {id: response.data.id}, query: {url: response.data.url}})
-          this.$store.commit('showToast', '发表成功')
-        }).catch((error) => {
-          console.log(error)
-          this.$split.commit('showToast', error.data.message)
+          this.$router.push(
+            {
+              name: 'post',
+              params: {
+                id: response.data.post_id
+              },
+              query: {
+                url: response.data.url
+              }
+            }
+          )
         })
       }
     }
   }
 </script>
-
-<style scoped>
-  .editor {
-    margin: 10px;
-  }
-  .tag-input {
-    text-align: right;
-  }
-  .editor-button {
-    text-align: center;
-  }
-</style>

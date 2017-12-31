@@ -13,9 +13,10 @@
     </mu-list>
   </mobile-tear-sheet>
 </template>
+
 <script>
   import mobileTearSheet from './mobileTearSheet.vue'
-  import api from '../../services/api'
+  import api from '@/services/api'
   export default {
     data: function () {
       return {
@@ -27,10 +28,10 @@
       'mobile-tear-sheet': mobileTearSheet
     },
     mounted: function () {
-      this.$http.get(api.tag).then((response) => {
+      this.axios.get(api.tag).then((response) => {
         this.tags = response.data.tags
       })
-      this.$http.get(api.time).then((response) => {
+      this.axios.get(api.time).then((response) => {
         this.time = response.data.time
       })
     }

@@ -10,7 +10,7 @@
                      :key="post.id">
           <moon-article v-bind:post="post"></moon-article>
         </router-link>
-        <mu-pagination :total="total" :current="current" @pageChange="handleClick" style="width: 100%;">
+        <mu-pagination :total="total" :current="current" @pageChange="handleClick">
         </mu-pagination>
       </mu-col>
       <mu-col width="100" tablet="20" desktop="10">
@@ -32,12 +32,12 @@
     data: function () {
       return {
         posts: '',
-        total: 0,
+        total: 1,
         current: 1
       }
     },
     mounted: function () {
-      this.$http.get(api.posts).then((response) => {
+      this.axios.get(api.posts).then((response) => {
         this.posts = response.data.posts
         this.total = response.data.count
       })
@@ -51,7 +51,7 @@
         alert(1)
       },
       handleClick (newIndex) {
-        this.$http.get(
+        this.axios.get(
           api.posts,
           {
             params: {
@@ -62,8 +62,8 @@
           this.posts = response.data.posts
           this.total = response.data.count
           this.pageScroll()
-        }, (response) => {
-          console.log(response)
+        }).catch((error) => {
+          this.$store.commit('showToast', error.response.data.message | 'Network anomaly')
         })
       },
       pageScroll: function () {
@@ -80,4 +80,3 @@
     padding: 8px;
   }
 </style>
-
