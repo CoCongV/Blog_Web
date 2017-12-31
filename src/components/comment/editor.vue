@@ -1,6 +1,6 @@
 <template>
   <div>
-    <vue-editor v-model="body"></vue-editor>
+    <vue-editor v-model="body" :editorToolbar="customToolbar"></vue-editor>
   </div>
 </template>
 
@@ -13,7 +13,12 @@
     data: function () {
       return {
         body: this.content,
-        reply: ''
+        reply: '',
+        customToolbar: [
+          ['bold', 'italic', 'underline'],
+          [{'list': 'ordered'}, {'list': 'bullet'}],
+          ['code-block']
+        ]
       }
     },
     components: {

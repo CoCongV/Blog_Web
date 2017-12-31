@@ -18,6 +18,7 @@
 
 <script>
 import 'babel-polyfill'
+import md5 from 'js-md5'
 import myUpload from 'vue-image-crop-upload'
 import data2blob from '@/components/data2blob.js'
 import api from '@/services/api'
@@ -49,10 +50,10 @@ export default {
       console.log('------------crop success ---------')
       console.log(field)
       this.imgDataURL = imgDataURL
+      let filename = md5.hex(imgDataURL)
       let data = data2blob(imgDataURL, this.$refs.upload.mime)
-      console.log(data)
       let formData = new FormData()
-      formData.append('image', data, field + '.' + this.$refs.upload.imgFormat)
+      formData.append('image', data, filename + '.' + this.$refs.upload.imgFormat)
       this.axios(
         {
           url: api.userAvatarUpload,
