@@ -21,8 +21,8 @@ Vue.use(VueHighlightJS)
 Vue.prototype.axios = axios
 
 axios.interceptors.request.use(function (config) {
-  // let oldUrl = config.url
-  // config.url = 'http://localhost:5000' + oldUrl
+  let oldUrl = config.url
+  config.url = 'http://localhost:5000' + oldUrl
   if (Vue.cookie.get('token')) {
     config.headers.Authorization = 'token ' + Vue.cookie.get('token')
   }
