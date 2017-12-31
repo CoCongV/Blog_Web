@@ -1,7 +1,18 @@
 <template>
   <div id="app">
     <moon-nav></moon-nav>
-    <vue-particles color="#dedede" :particleOpacity="0.8" :particlesNumber="60" shapeType="circle" :particleSize="6" linesColor="#dedede" :linesWidth="1" :lineOpacity="0.4" :linesDistance="200" :moveSpeed="3" class="particles" style="position: fixed; background-size: cover;width: 100%; height: 100%;top:0;left:0;">
+    <vue-particles color="#dedede" 
+      :particleOpacity="0.8" 
+      :particlesNumber="30" 
+      shapeType="circle" 
+      :particleSize="6" 
+      linesColor="#dedede" 
+      :linesWidth="1" 
+      :lineOpacity="0.4" 
+      :linesDistance="200" 
+      :moveSpeed="3" 
+      class="particles" 
+      style="position: fixed; background-size: cover;width: 100%; height: 100%;top:0;left:0;">
     </vue-particles>
     <div class="moon-content">
       <router-view></router-view>
