@@ -49,6 +49,7 @@
 
 <script>
   import api from '@/services/api'
+  import md5 from 'js-md5'
   import userAvatar from '@/components/user/avatar'
   export default {
     data: function () {
@@ -125,8 +126,8 @@
         this.axios.post(
           api.password,
           {
-            old_password: this.old_password,
-            new_password: this.new_password
+            old_password: md5.hex(this.old_password),
+            new_password: md5.hex(this.new_password)
           }
         ).then((response) => {
           this.showToast('更新成功')
