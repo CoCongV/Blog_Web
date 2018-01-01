@@ -47,8 +47,6 @@ export default {
       this.show = !this.show
     },
     cropSuccess (imgDataURL, field) {
-      console.log('------------crop success ---------')
-      console.log(field)
       this.imgDataURL = imgDataURL
       let filename = md5.hex(imgDataURL)
       let data = data2blob(imgDataURL, this.$refs.upload.mime)
