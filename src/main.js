@@ -7,11 +7,11 @@ import store from './store'
 import axios from 'axios'
 import MuseUI from 'muse-ui'
 import 'muse-ui/dist/muse-ui.css'
-import 'muse-ui/dist/theme-teal.css'
 import VueCookie from 'vue-cookie'
 import Vuex from 'vuex'
 import VueParticles from 'vue-particles'
 import VueHighlightJS from 'vue-highlightjs'
+import 'muse-ui/dist/theme-carbon.css'
 
 Vue.use(MuseUI)
 Vue.use(VueCookie)
@@ -22,7 +22,7 @@ Vue.prototype.axios = axios
 
 axios.interceptors.request.use(function (config) {
   // let oldUrl = config.url
-  // config.url = 'http://localhost:5000' + oldUrl
+  // config.url = 'http://localhost:8081' + oldUrl
   if (Vue.cookie.get('token')) {
     config.headers.Authorization = 'token ' + Vue.cookie.get('token')
   }
