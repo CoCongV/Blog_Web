@@ -1,27 +1,31 @@
 <template>
-  <div class="grid">
+  <mu-container class="grid demo-containder is-stripe">
     <mu-row gutter>
-      <mu-col width="0" tablet="15" desktop="15"></mu-col>
-      <mu-col width="100" tablet="50" desktop="50">
+      <mu-col xl="2" lg="4" md="0" sm="0">
+      </mu-col>
+      <mu-col xl="6" lg="4" md="12" sm="12">
         <router-link v-for="post in posts"
-                     :to="{ name: 'post',
-                      params: {id: post.post_id},
-                       query: {url: post.url}}"
-                     :key="post.id">
-          <moon-article v-bind:post="post"></moon-article>
+                  :to="{ name: 'post',
+                    params: {id: post.post_id},
+                    query: {url: post.url}}"
+                  :key="post.id">
+        <moon-article v-bind:post="post"></moon-article>
         </router-link>
         <mu-pagination :total="total" :current="current" @pageChange="handleClick">
         </mu-pagination>
       </mu-col>
-      <mu-col width="100" tablet="20" desktop="10">
+      <mu-col xl="2" lg="2" md="12" sm="12">
         <mu-paper class="demo-paper" :zDepth="1">
           <moon-slide></moon-slide>
         </mu-paper>
       </mu-col>
-      <mu-col width="0" tablet="15" desktop="15"></mu-col>
+      <mu-col xl="2" lg="2" md="0" sm="0">
+      </mu-col>
     </mu-row>
-    <mu-icon-button icon="arrow_upward" class="dialog" @click="pageScroll"/>
-  </div>
+    <mu-button icon @click="pageScroll" class="dialog">
+      <mu-icon value="arrow_upward"></mu-icon>
+    </mu-button>
+  </mu-container>
 </template>
 
 <script>

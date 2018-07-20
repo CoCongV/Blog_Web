@@ -1,18 +1,55 @@
 <template>
   <div>
-    <mu-appbar>
-      <mu-icon-button icon="menu" slot="left" @click="toggle(true)"/>
-      <mu-flat-button label="Blog" slot="left" labelClass="home-label" @click="home"/>
-      <mu-flat-button v-show="loginState" v-bind:label="name" slot="right"/>
-      <mu-icon-menu icon="more_vert" slot="right">
-        <mu-menu-item v-show="!loginState" title="登录" @click="login"/>
-        <mu-menu-item v-show="!loginState" title="注册" @click="register" />
-        <mu-menu-item v-show="loginState" title="个人主页" @click="profile" />
-        <mu-menu-item v-show="permissionAuth" title="发表文章" @click="addPost" />
-        <mu-menu-item v-show="loginState" title="注销" @click="logout"/>
-      </mu-icon-menu>
+    <mu-appbar color="primary">
+      <mu-button icon slot="left" @click="open = !open">
+        <mu-icon value="menu"></mu-icon>
+      </mu-button>
+      <!-- <mu-button flat slot="left" @click="home">Blog</mu-button> -->
+      <mu-button flat slot="left" @click="home">
+        <mu-icon left value="home"></mu-icon>Blog
+      </mu-button>
+      <mu-button flat slot="right" v-show="loginState">
+        {{ name }}
+      </mu-button>
+      <mu-menu slot="right">
+        <mu-button flat>
+          <mu-icon value="more_vert"></mu-icon>
+        </mu-button>
+        <mu-list slot="content">
+          <mu-list-item button @click="login">
+              <mu-list-item-title>登录</mu-list-item-title>
+          </mu-list-item>
+          <mu-list-item button @click="register">
+              <mu-list-item-title>注册</mu-list-item-title>
+          </mu-list-item>
+          <mu-list-item button @click="profile">
+              <mu-list-item-title>个人主页</mu-list-item-title>
+          </mu-list-item>
+          <mu-list-item button @click="addPost">
+              <mu-list-item-title>发表文章</mu-list-item-title>
+          </mu-list-item>
+          <mu-list-item button @click="logout">
+              <mu-list-item-title>注销</mu-list-item-title>
+          </mu-list-item>
+        </mu-list>
+      </mu-menu>
     </mu-appbar>
-    <mu-drawer :open="open" :docked="docked" @close="toggle()">
+    <mu-container>
+      <mu-drawer :open.sync="open" :docked="false" :right="false">
+        <mu-list>
+          <mu-list-item button>
+            <mu-list-item-title>Menu Item 1</mu-list-item-title>
+          </mu-list-item>
+          <mu-list-item button>
+            <mu-list-item-title>爬虫(dev)</mu-list-item-title>
+          </mu-list-item>
+          <mu-list-item  @click="open = false" button>
+            <mu-list-item-title>Close</mu-list-item-title>
+          </mu-list-item>
+        </mu-list>
+      </mu-drawer>
+    </mu-container>
+    <!-- <mu-drawer :open="open" :docked="docked" @close="toggle()">
       <mu-list>
         <mu-list-item>
           <mu-text-field
@@ -25,7 +62,7 @@
         </mu-list-item>
         <mu-list-item title="爬虫(dev)" @click="toggle()"/>
       </mu-list>
-    </mu-drawer>
+    </mu-drawer> -->
   </div>
 </template>
 

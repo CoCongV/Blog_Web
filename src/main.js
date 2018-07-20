@@ -11,6 +11,16 @@ import VueCookie from 'vue-cookie'
 import Vuex from 'vuex'
 import VueParticles from 'vue-particles'
 import VueHighlightJS from 'vue-highlightjs'
+import theme from 'muse-ui/lib/theme'
+
+theme.add('teal', {
+  primary: '#474a4f',
+  secondary: '#ff4081',
+  success: '#4caf50',
+  warning: '#ffeb3b'
+}, 'light')
+
+theme.use('teal')
 
 Vue.use(MuseUI)
 Vue.use(VueCookie)
@@ -20,8 +30,6 @@ Vue.use(VueHighlightJS)
 Vue.prototype.axios = axios
 
 axios.interceptors.request.use(function (config) {
-  // let oldUrl = config.url
-  // config.url = 'http://localhost:5000' + oldUrl
   if (Vue.cookie.get('token')) {
     config.headers.Authorization = 'token ' + Vue.cookie.get('token')
   }

@@ -1,34 +1,36 @@
 <template>
-  <mu-card class="login">
-    <div>
-      <mu-flexbox orient="vertical" align="center" style="text-align: center;">
-        <mu-flexbox-item>
-          <mu-text-field
-            label="邮箱"
-            type="email"
-            icon="account_circle"
-            v-model="email"
-            v-bind:errorText="error_email"
-            v-on:click="clear(this)"
-            labelFloat/>
-        </mu-flexbox-item>
-        <mu-flexbox-item>
-          <mu-text-field
-            label="密码"
-            labelFloat
-            type="password"
-            icon="https"
-            v-bind:errorText="error_password"
-            v-model="password"
-            @keyup.enter.native="login"
-          />
-        </mu-flexbox-item>
-      </mu-flexbox>
-    </div>
-    <mu-card-actions style="text-align: center">
-      <mu-raised-button label="登录" v-on:click="login" primary/>
-    </mu-card-actions>
-  </mu-card>
+  <mu-flex justify-content="center">
+    <mu-card class="login">
+      <mu-flex justify-content="center" fill>
+        <mu-container>
+          <form>
+            <mu-flex justify-content="center">
+              <mu-text-field
+                label="邮箱"
+                type="email"
+                icon="account_circle"
+                v-model="email"
+                :error-text="error_email"
+                label-float/>
+            </mu-flex>
+            <mu-flex justify-content="center">
+              <mu-text-field
+              label="密码"
+              label-float
+              type="password"
+              icon="locked"
+              :error-text="error_password"
+              v-model="password"
+              @keyup.enter.native="login"/>
+            </mu-flex>
+          </form>
+        </mu-container>
+      </mu-flex>
+      <mu-card-actions style="text-align: center">
+        <mu-button color="primary" @click="login">登录</mu-button>
+      </mu-card-actions>
+    </mu-card>
+  </mu-flex>
 </template>
 
 <script>
@@ -64,7 +66,6 @@
           this.error_password = '密码为空'
           return
         }
-        console.log('post login')
         this.axios.post(
           api.login,
           {
@@ -74,7 +75,6 @@
             this.$cookie.set(
               'token',
               response.data.token,
-              {expires: response.data.expiration.toString() + 's'}
             )
             localStorage.setItem('login', true)
             this.$store.commit('login')
@@ -83,6 +83,7 @@
               name: 'index'
             })
           }).catch((error) => {
+            console.log(error)
             this.$store.commit('showToast', error.response.data.message)
           })
       }
@@ -93,5 +94,6 @@
 <style scoped>
   .login {
     margin: 8px;
+    width: 100%;
   }
 </style>
