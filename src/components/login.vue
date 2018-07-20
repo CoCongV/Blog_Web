@@ -67,8 +67,8 @@
         this.axios.post(
           api.login,
           {
-            email: this.email,
-            password: md5.hex(this.password)
+            email: this.validateForm.email,
+            password: md5.hex(this.validateForm.password)
           }).then((response) => {
             this.$cookie.set(
               'token',
