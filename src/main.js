@@ -12,6 +12,7 @@ import Vuex from 'vuex'
 import VueParticles from 'vue-particles'
 import VueHighlightJS from 'vue-highlightjs'
 import theme from 'muse-ui/lib/theme'
+import Toast from 'muse-ui-toast'
 
 theme.add('teal', {
   primary: '#474a4f',
@@ -23,6 +24,7 @@ theme.add('teal', {
 theme.use('teal')
 
 Vue.use(MuseUI)
+Vue.use(Toast, {close: false})
 Vue.use(VueCookie)
 Vue.use(Vuex)
 Vue.use(VueParticles)

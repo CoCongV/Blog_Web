@@ -18,7 +18,7 @@
       <router-view></router-view>
     </div>
     <moon-foot id="foot-bar"></moon-foot>{{ showToast }}
-    <mu-toast v-if="toast" :message="message" @close="hideToast" />
+    <!-- <mu-toast v-if="toast" :message="message" @close="hideToast" /> -->
   </div>
 </template>
 
@@ -59,10 +59,9 @@ export default {
   computed: {
     showToast: function () {
       if (this.$store.state.toast) {
-        this.toast = this.$store.state.toast
         this.message = this.$store.state.message
-        if (this.toastTimer) clearTimeout(this.toastTimer)
-        this.toastTimer = setTimeout(() => { this.hideToast() }, 2000)
+        this.$toast.message(this.message)
+        setTimeout(() => { this.hideToast() }, 2000)
       }
     }
   },

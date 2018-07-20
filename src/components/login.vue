@@ -3,27 +3,22 @@
     <mu-card class="login">
       <mu-flex justify-content="center" fill>
         <mu-container>
-          <form>
+          <mu-form ref="form"  :model="validateForm">
             <mu-flex justify-content="center">
-              <mu-text-field
-                label="邮箱"
-                type="email"
-                icon="account_circle"
-                v-model="email"
-                :error-text="error_email"
-                label-float/>
+              <mu-form-item label="邮箱" icon="account_circle" :rules="emailRules" prop="email">
+                <mu-text-field type="email" v-model="validateForm.email" :error-text="error_email"/>
+              </mu-form-item> 
             </mu-flex>
             <mu-flex justify-content="center">
-              <mu-text-field
-              label="密码"
-              label-float
-              type="password"
-              icon="locked"
-              :error-text="error_password"
-              v-model="password"
-              @keyup.enter.native="login"/>
+              <mu-form-item label="密码" icon="locked" :rules="passwordRules" prop="password">
+                <mu-text-field
+                type="password"
+                :error-text="error_password"
+                v-model="validateForm.password"
+                @keyup.enter.native="login"/>
+              </mu-form-item>
             </mu-flex>
-          </form>
+          </mu-form>
         </mu-container>
       </mu-flex>
       <mu-card-actions style="text-align: center">
@@ -42,7 +37,17 @@
         email: '',
         password: '',
         error_email: '',
-        error_password: ''
+        error_password: '',
+        validateForm: {
+          email: '',
+          password: ''
+        },
+        emailRules: [
+          {validate: (val) => !!val, message: '邮箱不能为空'}
+        ],
+        passwordRules: [
+          {validate: (val) => !!val, message: '密码不能为空'}
+        ]
       }
     },
     watch: {
@@ -59,13 +64,6 @@
     },
     methods: {
       login: function () {
-        if (!this.email) {
-          this.error_email = '用户名为空'
-          return
-        } else if (!this.password) {
-          this.error_password = '密码为空'
-          return
-        }
         this.axios.post(
           api.login,
           {
@@ -83,7 +81,6 @@
               name: 'index'
             })
           }).catch((error) => {
-            console.log(error)
             this.$store.commit('showToast', error.response.data.message)
           })
       }

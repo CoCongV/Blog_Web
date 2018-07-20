@@ -16,19 +16,19 @@
           <mu-icon value="more_vert"></mu-icon>
         </mu-button>
         <mu-list slot="content">
-          <mu-list-item button @click="login">
+          <mu-list-item button @click="login" v-show="!loginState">
               <mu-list-item-title>登录</mu-list-item-title>
           </mu-list-item>
-          <mu-list-item button @click="register">
+          <mu-list-item button @click="register" v-show="!loginState">
               <mu-list-item-title>注册</mu-list-item-title>
           </mu-list-item>
-          <mu-list-item button @click="profile">
+          <mu-list-item button @click="profile" v-show="!loginState">
               <mu-list-item-title>个人主页</mu-list-item-title>
           </mu-list-item>
-          <mu-list-item button @click="addPost">
+          <mu-list-item button @click="addPost" v-show="permissionAuth">
               <mu-list-item-title>发表文章</mu-list-item-title>
           </mu-list-item>
-          <mu-list-item button @click="logout">
+          <mu-list-item button @click="logout" v-show="loginState">
               <mu-list-item-title>注销</mu-list-item-title>
           </mu-list-item>
         </mu-list>
