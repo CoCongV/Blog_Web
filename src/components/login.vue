@@ -73,6 +73,10 @@
             this.$cookie.set(
               'token',
               response.data.token,
+<<<<<<< HEAD
+=======
+              // {expires: response.data.expiration.toString() + 's'}
+>>>>>>> master
             )
             localStorage.setItem('login', true)
             this.$store.commit('login')

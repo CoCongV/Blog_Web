@@ -11,6 +11,7 @@ import VueCookie from 'vue-cookie'
 import Vuex from 'vuex'
 import VueParticles from 'vue-particles'
 import VueHighlightJS from 'vue-highlightjs'
+<<<<<<< HEAD
 import theme from 'muse-ui/lib/theme'
 import Toast from 'muse-ui-toast'
 
@@ -22,6 +23,9 @@ theme.add('teal', {
 }, 'light')
 
 theme.use('teal')
+=======
+import 'muse-ui/dist/theme-carbon.css'
+>>>>>>> master
 
 Vue.use(MuseUI)
 Vue.use(Toast, {close: false})
@@ -32,6 +36,11 @@ Vue.use(VueHighlightJS)
 Vue.prototype.axios = axios
 
 axios.interceptors.request.use(function (config) {
+<<<<<<< HEAD
+=======
+  // let oldUrl = config.url
+  // config.url = 'http://localhost:8081' + oldUrl
+>>>>>>> master
   if (Vue.cookie.get('token')) {
     config.headers.Authorization = 'token ' + Vue.cookie.get('token')
   }
