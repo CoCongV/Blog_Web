@@ -10,6 +10,11 @@
                 </v-avatar>
                 <h1 :class="headerAuthorClass">VCong</h1>
                 <p class="subheading text-xs-center" style="line-height: 25px; margin-bottom: 0px;">朝闻道</p>
+                <v-layout align-center justify-center v-show="!mobile">
+                    <v-flex xs6>
+                        <v-text-field placeholder="Search" v-model="searchText" box height="30px"></v-text-field>
+                    </v-flex>
+                </v-layout>
                 <v-layout align-center justify-center ref="label" :class="['label', labelClass]">
                     <router-link :to="{ name: 'home' }" tag="button" class="item">首页</router-link>
                     <router-link :to="{name: 'home'}" tag="button" class="item">归档</router-link>
@@ -39,21 +44,33 @@
             return {
                 leftcolClass: "leftcol-desktop",
                 labelClass: "column",
-                headerAuthorClass: "header-author-desktop"
+                headerAuthorClass: "header-author-desktop",
+                searchText: "",
+                mobile: false,
             }
         },
         mounted: function() {
             let that = this;
-            this.leftcolClass = this.ensureLeftcolClass();
-            this.labelClass = this.ensureLableClass();
-            this.headerAuthorClass = this.ensureHeaderAuthorClass();
+            that.ensureDevice(that);
             window.onresize = function temp() {
-                that.leftcolClass = that.ensureLeftcolClass();
-                that.labelClass = that.ensureLableClass();
-                that.headerAuthorClass = that.ensureHeaderAuthorClass()
+                that.ensureDevice(that)
             }
         },
         methods: {
+            ensureDevice (that) {
+                if (userAgent.isMobile()) {
+                    that.leftcolClass = "leftcol-mobile"
+                    that.labelClass = "row"
+                    that.headerAuthorClass = ""
+                    that.mobile = true
+                } else {
+                    that.leftcolClass = "leftcol-desktop"
+                    that.labelClass = "column"
+                    that.headerAuthorClass = "header-author-desktop"
+                    that.mobile = false
+                }
+                return true
+            },
             ensureLeftcolClass () {
                 if (userAgent.isMobile()) {
                     return "leftcol-mobile"

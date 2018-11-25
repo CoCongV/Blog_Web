@@ -14,7 +14,7 @@
                 </v-flex>
             </v-layout>
             <div class="text-xs-center">
-              <v-pagination v-model="page" :length="length" dark></v-pagination>
+              <v-pagination v-model="page" :length="length"></v-pagination>
             </div>
         </v-flex>
     </v-layout>

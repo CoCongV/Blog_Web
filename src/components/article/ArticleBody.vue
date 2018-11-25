@@ -1,5 +1,5 @@
 <template>
-    <v-card dark raised hover class="article-body">
+    <v-card raised hover class="article-body">
         <v-card-title primary-title :key="article.id" class="justify-center">
             <div>
                 <h3 class="headline mb-0">{{article.title}}</h3>
@@ -11,6 +11,11 @@
         <v-card-text class="article-overview">
             <div v-html="article.body_html"></div>
         </v-card-text>
+        <div>
+            <v-chip label text-color="white" v-for="tag in article.tags" :key="tag" color="primary" small>
+                <v-icon left>label</v-icon>{{tag}}
+            </v-chip>
+        </div>
         <v-card-actions>
         </v-card-actions>
     </v-card>
