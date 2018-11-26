@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import Vuex from "vuex";
 import App from './App.vue'
 import router from './router'
 import store from './store'
@@ -10,6 +11,7 @@ import VueAxios from 'vue-axios'
 
 Vue.config.productionTip = false
 Vue.config.devtools = true
+Vue.use(Vuex)
 Vue.use(Vuetify)
 Vue.use(VueAxios, axios)
 

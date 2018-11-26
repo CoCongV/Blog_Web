@@ -31,7 +31,6 @@ export default {
         articleBody: ArticleBody
     },
     created () {
-        console.log('test')
         this.axios.get(this.$route.query.url).then((response) => {
             this.article = response.data.post
             this.deletePermission = response.data.delete_permission

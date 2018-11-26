@@ -1,5 +1,5 @@
 <template>
-    <v-layout :class="['header', leftcolClass]" ref="leftcol" row align-center justify-center fill-height>
+    <v-layout :class="['header', leftcolClass]" ref="leftcol" row align-center justify-center fill-height v-resize="ensureDevice">
         <v-flex xs12>
             <div class="text-xs-center">
                 <v-avatar size="125px">
@@ -51,23 +51,20 @@
         },
         mounted: function() {
             let that = this;
-            that.ensureDevice(that);
-            window.onresize = function temp() {
-                that.ensureDevice(that)
-            }
+            that.ensureDevice();
         },
         methods: {
-            ensureDevice (that) {
+            ensureDevice () {
                 if (userAgent.isMobile()) {
-                    that.leftcolClass = "leftcol-mobile"
-                    that.labelClass = "row"
-                    that.headerAuthorClass = ""
-                    that.mobile = true
+                    this.leftcolClass = "leftcol-mobile"
+                    this.labelClass = "row"
+                    this.headerAuthorClass = ""
+                    this.mobile = true
                 } else {
-                    that.leftcolClass = "leftcol-desktop"
-                    that.labelClass = "column"
-                    that.headerAuthorClass = "header-author-desktop"
-                    that.mobile = false
+                    this.leftcolClass = "leftcol-desktop"
+                    this.labelClass = "column"
+                    this.headerAuthorClass = "header-author-desktop"
+                    this.mobile = false
                 }
                 return true
             },
@@ -107,6 +104,7 @@
         line-height: 3em;
     }
     .leftcol-mobile {
+        height: auto;
         background-image: url("/img/bg-9.jpg");
         background-position: center center;
         background-size: cover;

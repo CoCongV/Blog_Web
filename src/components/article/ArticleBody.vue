@@ -12,7 +12,7 @@
             <div v-html="article.body_html"></div>
         </v-card-text>
         <div>
-            <v-chip label text-color="white" v-for="tag in article.tags" :key="tag" color="primary" small>
+            <v-chip label text-color="white" v-for="tag in article.tags" :key="tag" :color="getColor()" small>
                 <v-icon left>label</v-icon>{{tag}}
             </v-chip>
         </div>
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { randomColor } from "@/utils.js";
 export default {
     props: {
         article: {}
@@ -29,6 +30,11 @@ export default {
     data () {
         return {
             overflow: true
+        }
+    },
+    methods: {
+        getColor: function () {
+            return randomColor()
         }
     }
 }
