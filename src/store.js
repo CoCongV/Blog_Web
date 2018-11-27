@@ -8,6 +8,9 @@ export default new Vuex.Store({
     snackbar: false,
     snackbarText: '',
     snackbarColor: '',
+    login: false,
+    username: '',
+    permission: 0,
   },
   mutations: {
     showSnackbar (state, config) {
@@ -19,6 +22,16 @@ export default new Vuex.Store({
       state.snackbar = false
       state.snackbarText = ''
       state.snackbarColor = ''
+    },
+    login (state, userInfo) {
+      state.login = true
+      state.username = userInfo.username
+      state.permission = userInfo.permission
+    },
+    logout (state) {
+      state.login = false
+      state.username = ''
+      state.permission = 0
     }
   },
   actions: {

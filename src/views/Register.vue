@@ -50,9 +50,9 @@ export default {
 
 <style>
     .registerViewDesktop {
-        height: inherit;
+        height: 100%
     }
     .registerDesktop {
-        height: inherit;
+        height: 100%;
     }
 </style>

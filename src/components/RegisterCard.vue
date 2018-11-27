@@ -45,6 +45,7 @@ export default {
                     username: this.name
                 }).then((response) => {
                     this.$store.commit('showSnackbar', {text: 'Register Success', color: 'success'})
+                    this.$cookie.set('token', response.data.token, {expires: response.data.expiration + 's'})
                     this.$router.push({name: 'home'})
                 }).catch((error) => {
                     console.log(error)

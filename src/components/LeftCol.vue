@@ -19,7 +19,7 @@
                     <router-link :to="{ name: 'home' }" tag="button" class="item">首页</router-link>
                     <router-link :to="{name: 'home'}" tag="button" class="item">归档</router-link>
                     <router-link :to="{name: 'home'}" tag="button" class="item">随笔</router-link>
-                    <router-link :to="{name: 'register'}" tag="button" class="item">注册</router-link>
+                    <!-- <router-link :to="{name: itemRouter}" tag="button" class="item">{{itemName}}</router-link> -->
                 </v-layout>
                 <v-layout class="social" align-center justify-center>
                     <div class="item">
@@ -47,11 +47,20 @@
                 headerAuthorClass: "header-author-desktop",
                 searchText: "",
                 mobile: false,
+                // itemName: "登录",
+                // itemRouter: "login"
             }
         },
         mounted: function() {
             let that = this;
             that.ensureDevice();
+            // if (this.$cookie.get('token')) {
+            //     this.itemName = "个人中心"
+            //     this.itemRouter = "userProfile"
+            // } else {
+            //     this.itemName = "登录"
+            //     this.itemRouter = "login"
+            // }
         },
         methods: {
             ensureDevice () {
