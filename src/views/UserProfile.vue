@@ -11,6 +11,9 @@
                 <comment-card :comments="comments" v-if="editPermission"></comment-card>
             </v-flex>
         </v-layout>
+        <v-btn color="pink" fixed bottom right fab>
+            <v-icon>edit</v-icon>
+        </v-btn>
     </v-app>
 </template>
 
