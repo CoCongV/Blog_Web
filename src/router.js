@@ -39,6 +39,11 @@ export default new Router({
       path: '/profile',
       name: 'profile',
       component: () => import('@/views/UserProfile')
+    },
+    {
+      path: '/add_article',
+      name: 'addArticle',
+      component: () => import('@/views/AddArticle')
     }
   ]
 })

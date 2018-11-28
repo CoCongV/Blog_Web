@@ -28,7 +28,7 @@
             <router-link :to="{name: 'home'}">
                 <v-icon class="mx-3">home</v-icon>
             </router-link>
-            <v-toolbar-title>Personal Center</v-toolbar-title>
+                <v-toolbar-title @click="profile">{{title}}</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-layout row align-center style="max-width: 20%">
                 <v-text-field placeholder="Search" single-line append-icon="search" color="white" hide-detail></v-text-field>
@@ -39,17 +39,27 @@
 
 <script>
 export default {
+    props: {
+        title: 'Personal Center'
+    },
     data () {
         return {
             drawer: null,
             tools: [
                 {icon: 'label', title: 'Spider', click: this.test}
-            ]
+            ],
         }
     },
     methods: {
         test () {
             this.$store.commit('showSnackbar', {'text': '假的', 'color': 'error'})
+        },
+        profile () {
+            if (this.$store.state.login) {
+                this.$router.push({name: 'profile'})
+            } else {
+                this.$router.push({name: 'login'})
+            }
         }
     },
     computed: {

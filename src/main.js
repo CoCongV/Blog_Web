@@ -24,6 +24,20 @@ axios.interceptors.request.use(function (config) {
   return config
 })
 
+axios.interceptors.response.use((response) =>{
+  return response
+}, (error) => {
+  console.log(error)
+  if (error.response.status === 401) {
+    router.push({name: 'login'})
+  } else if (error.response.status === 500) {
+    store.commit('showSnackbar', {'text': '服务器炸了', 'color': 'error'})
+    return Promise.reject(error)
+  } else {
+    return Promise.reject(error)
+  }
+})
+
 new Vue({
   router,
   store,

@@ -5,11 +5,11 @@
                 <v-avatar size="125px">
                 <img
                     class="img-circle elevation-7 mb-1"
-                    src="https://raw.githubusercontent.com/vuetifyjs/docs/dev/static/doc-images/lists/1.jpg"
+                    :src="getAvatar"
                 >
                 </v-avatar>
-                <h1 :class="headerAuthorClass">VCong</h1>
-                <p class="subheading text-xs-center" style="line-height: 25px; margin-bottom: 0px;">朝闻道</p>
+                <h1 :class="headerAuthorClass">{{getName}}</h1>
+                <p class="subheading text-xs-center" style="line-height: 25px; margin-bottom: 0px;">{{getAbout}}</p>
                 <v-layout align-center justify-center v-show="!mobile">
                     <v-flex xs6>
                         <v-text-field placeholder="Search" v-model="searchText" box height="30px"></v-text-field>
@@ -19,7 +19,6 @@
                     <router-link :to="{ name: 'home' }" tag="button" class="item">首页</router-link>
                     <router-link :to="{name: 'home'}" tag="button" class="item">归档</router-link>
                     <router-link :to="{name: 'home'}" tag="button" class="item">随笔</router-link>
-                    <!-- <router-link :to="{name: itemRouter}" tag="button" class="item">{{itemName}}</router-link> -->
                 </v-layout>
                 <v-layout class="social" align-center justify-center>
                     <div class="item">
@@ -47,20 +46,11 @@
                 headerAuthorClass: "header-author-desktop",
                 searchText: "",
                 mobile: false,
-                // itemName: "登录",
-                // itemRouter: "login"
             }
         },
         mounted: function() {
             let that = this;
             that.ensureDevice();
-            // if (this.$cookie.get('token')) {
-            //     this.itemName = "个人中心"
-            //     this.itemRouter = "userProfile"
-            // } else {
-            //     this.itemName = "登录"
-            //     this.itemRouter = "login"
-            // }
         },
         methods: {
             ensureDevice () {
@@ -97,6 +87,17 @@
                 } else {
                     return "header-author-desktop"
                 }
+            }
+        },
+        computed: {
+            getName () {
+                return this.$store.state.bloggerUsername
+            },
+            getAbout () {
+                return this.$store.state.aboutBlogger
+            },
+            getAvatar () {
+                return this.$store.state.bloggerAvatar
             }
         }
     }

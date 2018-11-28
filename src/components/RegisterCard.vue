@@ -1,6 +1,6 @@
 <template>
     <v-form v-model="valid" lazy-validation ref="form">
-        <v-text-field v-model="name" :rules="nameRules" :counter="10" label="Name" required></v-text-field>
+        <v-text-field v-model="name" :rules="nameRules" :counter="18" label="Name" required></v-text-field>
         <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
         <v-text-field v-model="password" :rules="passwordRules" label="Password" required type="password"></v-text-field>
         <v-layout justify-space-around>
@@ -21,7 +21,7 @@ export default {
             name: '',
             nameRules: [
                 v => !!v || 'Name is required',
-                v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+                v => (v && v.length <= 18) || 'Name must be less than 10 characters',
             ],
             email: '',
             emailRules: [
@@ -48,7 +48,6 @@ export default {
                     this.$cookie.set('token', response.data.token, {expires: response.data.expiration + 's'})
                     this.$router.push({name: 'home'})
                 }).catch((error) => {
-                    console.log(error)
                     this.$store.commit('showSnackbar', {text: error.response.data.message, color: 'error'})
                 })
             }

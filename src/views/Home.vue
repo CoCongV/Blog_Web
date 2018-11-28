@@ -4,17 +4,17 @@
     <v-container>
       <article-list></article-list>
       <v-speed-dial v-model="fab" right bottom direction="top" :open-on-hover="desktop" style="position: fixed" v-resize="getHoverAttr">
-        <v-btn slot="activator" v-model="fab" color="blule darken-2" dark fab>
+        <v-btn slot="activator" v-model="fab" color="blue darken-2" fab>
           <v-icon>apps</v-icon>
           <v-icon>close</v-icon>
         </v-btn>
         <v-btn fab small color="error" v-if="getLoginState" @click="logout">
           <v-icon>exit_to_app</v-icon>
         </v-btn>
-        <v-btn fab dark small color="success" class="fab" v-if="addArticle">
+        <v-btn fab small color="success" class="fab" v-if="addArticlePermission" @click="addArticle">
           <v-icon>create</v-icon>
         </v-btn>
-        <v-btn fab dark small color="info" class="fab" @click="profile">
+        <v-btn fab small color="info" class="fab" @click="profile">
           <v-icon>person</v-icon>
         </v-btn>
       </v-speed-dial>
@@ -41,11 +41,7 @@ export default {
   },
   methods: {
     profile () {
-      if (this.$store.state.login) {
-        this.$router.push({name: 'profile'})
-      } else {
-        this.$router.push({name: 'login'})
-      }
+      this.$router.push({name: 'profile'})
     },
     logout () {
       this.$store.commit('logout')
@@ -58,10 +54,13 @@ export default {
       } else {
         this.desktop = true
       }
+    },
+    addArticle () {
+      this.$router.push({name: 'addArticle'})
     }
   },
   computed: {
-    addArticle () {
+    addArticlePermission () {
       if (this.$store.state.permission >= 255) {
         return true
       } else {

@@ -18,11 +18,14 @@ export default {
   },
   mounted () {
     this.axios.get(api.user).then((response) => {
-      console.log(response)
       this.$store.commit('login', response.data)
     }).catch((error) => {
-      console.log(error)
       this.$store.commit('logout')
+    })
+    this.axios.get(api.blogger).then((response) => {
+      this.$store.commit('cacheBlogger', response.data)
+    }).catch((error) => {
+      this.$store.commit('showSnackbar', {text: 'Cache Failed', color: 'error'})
     })
   }
 }
@@ -33,4 +36,3 @@ export default {
     height: 100%;
   }
 </style>
-

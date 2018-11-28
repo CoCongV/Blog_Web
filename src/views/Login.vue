@@ -2,8 +2,8 @@
     <div :class="loginView">
         <left-col></left-col>
         <v-container :class="loginContainer" v-resize="onResize">
-            <v-layout align-center fill-height>
-                <v-flex xs12 md9 offset-md3>
+            <v-layout align-center justify-center fill-height>
+                <v-flex xs12 md6 lg4>
                     <login-card></login-card>
                 </v-flex>
             </v-layout>
@@ -54,5 +54,7 @@ export default {
     }
     .loginDesktop {
         height: 100%;
+        max-width: 80%;
+        margin-left: 20%;
     }
 </style>

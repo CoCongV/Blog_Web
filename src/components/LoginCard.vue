@@ -41,7 +41,6 @@ export default {
                     this.$store.commit('login', response.data)
                     this.$router.push({name: 'home'})
                 }).catch((error) => {
-                    console.log(error)
                     this.$store.commit('showSnackbar', {text: error.response.data.message, color:'error'})
                 })
             }

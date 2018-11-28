@@ -34,8 +34,6 @@ export default {
         this.axios.get(this.$route.query.url).then((response) => {
             this.article = response.data.post
             this.deletePermission = response.data.delete_permission
-        }).catch((error) => {
-            console.log(error)
         })
         this.axios.get(api.comment, {
             params: {
@@ -44,9 +42,7 @@ export default {
         }).then((response) => {
             this.comments = response.data.comments
             this.total = response.data.count
-        }).catch((error) => {
-            console.log(error)
-      })
+        })
     },
 }
 </script>
