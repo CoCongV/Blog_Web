@@ -1,12 +1,21 @@
 <template>
-    <v-form v-model="valid" lazy-validation ref="form">
-        <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
-        <v-text-field type="password" v-model="password" :rules="passwordRules" label="Password" required></v-text-field>
-        <v-layout justify-space-around>
-            <v-btn :disabled="!valid" @click="submit" color="cyan darken-2">提交</v-btn>
-            <v-btn @click="clear">重置</v-btn>
-        </v-layout>
-    </v-form>
+    <v-card>
+        <v-toolbar color="Primary">
+            <v-toolbar-title>Login Form</v-toolbar-title>
+        </v-toolbar>
+        <v-card-text>
+            <v-form v-model="valid" lazy-validation ref="form">
+                <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
+                <v-text-field type="password" v-model="password" :rules="passwordRules" label="Password" required></v-text-field>
+            </v-form>
+        </v-card-text>
+        <v-card-actions>
+            <v-layout justify-space-around>
+                <v-btn :disabled="!valid" @click="submit" color="cyan darken-2">提交</v-btn>
+                <v-btn @click="clear">重置</v-btn>
+            </v-layout>
+        </v-card-actions>
+    </v-card>
 </template>
 
 <script>
