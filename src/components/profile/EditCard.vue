@@ -20,10 +20,11 @@
 <script>
 export default {
     props: {
-        username: '',
-        email: '',
-        location: '',
-        about: '',
+        initUsername: '',
+        initEmail: '',
+        initLocation: '',
+        initAbout: '',
+        initAvatar: '',
     },
     data () {
         return {
@@ -50,7 +51,12 @@ export default {
                 v => !!v || 'Name is required',
                 v => (v && v.length <= 18) || 'Name must be less than 10 characters',
             ],
-            valid: true
+            valid: true,
+            username: this.initUsername,
+            email: this.initEmail,
+            location: this.initLocation,
+            about: this.initAbout,
+            avatar: this.initAvatar,
         }
     }
 }
