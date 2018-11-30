@@ -38,14 +38,21 @@ export default {
         vueEditor: VueEditor,
     },
     props: {
-        content: '',
+        initContent: '',
         edit: false,
+        initTitle: '',
+        initTags: {
+            default: []
+        },
+        url: '',
     },
     data () {
         return {
-            title: '',
-            tags: [],
             cacheTag: '',
+            content: this.initContent,
+            title: this.initTitle,
+            tags: this.initTags,
+            updated: false,
             loader: null,
             loadingSubmit: false,
             loadingCache: false,
@@ -54,39 +61,52 @@ export default {
     },
     methods: {
         addTag () {
-            this.tags.push(this.cacheTag)
-            this.cacheTag = ''
+            if (this.cacheTag) {
+                this.tags.push(this.cacheTag)
+                this.cacheTag = ''
+            }
         },
         remove (item) {
             this.tags.splice(this.tags.indexOf(item), 1)
         },
         reset () {
+            this.loadingReset = true
             if (this.edit) {
+                this.axios.get(this.url).then((response) => {
+                    this.content = response.data.post.content
+                    this.title = response.data.post.title
+                    this.tags = response.data.post.tags
+                })
             } else {
-                this.loadingReset = true
                 this.title = ''
                 this.tags = []
                 this.cacheTag = ''
                 this.content = ''
-                this.loadingReset = false}
+                }
+            this.loadingReset = false
         },
         submit () {
             this.loadingSubmit = true
-            let body = {
+            let content = {
                 tags: this.tags,
                 content: this.content,
                 title: this.title
             }
-            this.axios.post(api.posts, body).then((response) => {
+            this.axios({
+                method: this.edit ? 'patch' : 'post',
+                url: this.edit ? this.url : api.posts,
+                data: content
+            }).then((response) => {
                 this.$store.commit('showSnackbar', {text: 'Public Success', color: 'success'})
                 this.$router.push({name: 'home'})
             }).catch((error) => {
                 console.log(error.response)
+                this.$store.commit('showSnackbar', {text: error.response.data.message, color: 'error'})
             }).then(() => {
                 this.loadingSubmit = false
             })
         }
-    }
+    },
 }
 </script>
 

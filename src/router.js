@@ -41,9 +41,14 @@ export default new Router({
       component: () => import('@/views/UserProfile')
     },
     {
-      path: '/add_article',
+      path: '/article/add',
       name: 'addArticle',
       component: () => import('@/views/AddArticle')
+    },
+    {
+      path: '/article/edit/:id(\\d+)',
+      name: 'editArticle',
+      component: () => import('@/views/EditArticle')
     }
   ]
 })

@@ -17,10 +17,11 @@ export default {
     snackbar: Snackbar,
   },
   mounted () {
-    this.axios.get(api.user).then((response) => {
-      this.$store.commit('login', response.data)
-    }).catch((error) => {
-      this.$store.commit('logout')
+    this.axios.get(api.token).then((response) => {
+      if (response.data.state) {
+        this.$store.commit('login', response.data)
+        this.$store.commit('showSnackbar', {text: `Welcome Back ${response.data.username}`, color: 'cyan darken-2'})
+      }
     })
     this.axios.get(api.blogger).then((response) => {
       this.$store.commit('cacheBlogger', response.data)
