@@ -4,7 +4,7 @@ html, body {
 }
 
 .article-overview {
-    overflow: hidden;
+    overflow: auto;
 }
 .article-body {
     line-height: 1.8em;

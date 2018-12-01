@@ -37,8 +37,21 @@ export default {
     mounted: function () {
       this.axios.get(api.posts).then((response) => {
         this.articles = response.data.posts
-        this.length = response.data.count
+        this.length = response.data.pages
       })
+    },
+    watch: {
+        page: function(newVal, oldVal) {
+            console.log(this.page)
+            this.axios.get(api.posts, {
+                params: {
+                    page: newVal
+                }
+            }).then((response) => {
+                this.articles = response.data.posts
+                this.length = response.data.count
+            })
+        }
     }
 }
 </script>

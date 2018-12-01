@@ -7,7 +7,8 @@
                 </v-flex>
             </v-layout>
         </v-toolbar>
-        <vue-editor v-model="content"></vue-editor>
+        <vue-editor v-model="content" :editorOptions="editorSettings">
+        </vue-editor>
         <v-layout class="tag">
             <v-flex xs3 md3 lg2 v-for="tag of tags" :key="tag">
                 <v-chip close @input="remove(tag)">{{tag}}</v-chip>
@@ -33,6 +34,7 @@
 <script>
 import { VueEditor } from "vue2-editor";
 import { api } from "@/libs/api";
+
 export default {
     components: {
         vueEditor: VueEditor,
@@ -57,6 +59,11 @@ export default {
             loadingSubmit: false,
             loadingCache: false,
             loadingReset: false,
+            editorSettings: {
+                modules: {
+                    syntax: true,
+                }
+            }
         }
     },
     methods: {

@@ -4,7 +4,12 @@
         <v-container>
             <v-layout>
                 <v-flex xs12 md9 offset-md3>
-                    <article-body :article="article"></article-body>
+                    <article-body :article="article" :hover="false"></article-body>
+                    <div v-for="comment in comments" :key="comment.id">
+                        <comment-card :content="comment.body_html" :author="comment.author" class="commentCard"
+                            :uid="comment.uid" :avatar="comment.avatar" :timestamp="comment.timestamp"
+                        ></comment-card>
+                    </div>
                 </v-flex>
             </v-layout>
             <v-speed-dial v-model="fab" right bottom direction="top" open-on-hover fixed v-if="deletePermission">
@@ -25,6 +30,7 @@
 
 <script>
 import ArticleBody from '@/components/article/ArticleBody'
+import CommentCard from '@/components/comment/CommentCard'
 import { api } from "@/libs/api"; 
 import LeftCol from '@/components/LeftCol'
 
@@ -40,7 +46,8 @@ export default {
     },
     components: {
         leftCol: LeftCol,
-        articleBody: ArticleBody
+        articleBody: ArticleBody,
+        commentCard: CommentCard,
     },
     created () {
         this.axios.get(this.$route.query.url).then((response) => {
@@ -50,7 +57,6 @@ export default {
                     post_id: this.article.post_id
                 }
             }).then((response) => {
-                console.log('get post permission return')
                 this.deletePermission = true
             }).catch((error) => {
                 this.deletePermission = false
@@ -81,4 +87,10 @@ export default {
     }
 }
 </script>
+
+<style>
+    .commentCard {
+        margin-top: 10px
+    }
+</style>
 
