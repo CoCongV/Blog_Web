@@ -1,89 +1,39 @@
 <template>
-  <div id="app">
-    <moon-nav></moon-nav>
-    <vue-particles color="#dedede" 
-      :particleOpacity="0.8" 
-      :particlesNumber="30" 
-      shapeType="circle" 
-      :particleSize="6" 
-      linesColor="#dedede" 
-      :linesWidth="1" 
-      :lineOpacity="0.4" 
-      :linesDistance="200" 
-      :moveSpeed="3" 
-      class="particles" 
-      style="position: fixed; background-size: cover;width: 100%; height: 100%;top:0;left:0;">
-    </vue-particles>
-    <div class="moon-content">
+  <v-app dark style="min-height: 100%">
+    <div id="app">
       <router-view></router-view>
     </div>
-    <moon-foot id="foot-bar"></moon-foot>{{ showToast }}
-    <!-- <mu-toast v-if="toast" :message="message" @close="hideToast" /> -->
-  </div>
+    <snackbar></snackbar>
+  </v-app>
 </template>
 
 <script>
-import nav from './components/navbar.vue'
-import foot from './components/footbar.vue'
-import api from './services/api'
+import Snackbar from '@/components/Snackbar'
+import Home from '@/views/Home'
+import { api } from "@/libs/api";
 export default {
-  name: 'app',
-  data: function () {
-    return {
-      toast: false,
-      message: ''
-    }
-  },
-  created: function () {
-    if (this.$cookie.get('token')) {
-      this.axios.get(
-        api.token
-      ).then((response) => {
-        this.$store.commit('login')
-      }).catch((error) => {
-        console.log(error)
-        this.$store.commit('logout')
-      })
-      this.axios.get(api.permission).then((response) => {
-        this.$store.commit('permission', response.data.permission)
-      }).catch((error) => {
-        console.log(error)
-        this.$store.commit('permission', 0)
-      })
-    }
-  },
   components: {
-    'moon-nav': nav,
-    'moon-foot': foot
+    home: Home,
+    snackbar: Snackbar,
   },
-  computed: {
-    showToast: function () {
-      if (this.$store.state.toast) {
-        this.message = this.$store.state.message
-        this.$toast.message(this.message)
-        setTimeout(() => { this.hideToast() }, 2000)
+  mounted () {
+    this.axios.get(api.token).then((response) => {
+      if (response.data.state) {
+        this.$store.commit('login', response.data)
+        this.$store.commit('showSnackbar', {text: `Welcome Back ${response.data.username}`, color: 'cyan darken-2'})
       }
-    }
-  },
-  methods: {
-    hideToast: function () {
-      this.$store.commit('hideToast')
-      this.toast = false
-      this.message = ''
-      if (this.toastTimer) clearTimeout(this.toastTimer)
-    }
+    })
+    this.axios.get(api.blogger).then((response) => {
+      this.$store.commit('cacheBlogger', response.data)
+    }).catch((error) => {
+      this.$store.commit('showSnackbar', {text: 'Cache Failed', color: 'error'})
+    })
   }
 }
 </script>
 
 <style>
-.particles {
-  position: absolute;
-  background-size: cover;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: -1;
-}
+  #app {
+    height: 100%;
+  }
 </style>
