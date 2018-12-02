@@ -48,7 +48,7 @@ export default {
                     this.$store.commit('showSnackbar', {text: 'Login Success', color: 'success'})
                     this.$cookie.set('token', response.data.token, {expires: response.data.expiration + 's'})
                     this.$store.commit('login', response.data)
-                    this.$router.push({name: 'home'})
+                    this.$emit('login')
                 }).catch((error) => {
                     this.$store.commit('showSnackbar', {text: error.response.data.message, color:'error'})
                 })
@@ -57,6 +57,9 @@ export default {
         clear () {
             this.$refs.form.reset()
         }
+    },
+    mounted () {
+        console.log(this.$route)
     }
 }
 </script>

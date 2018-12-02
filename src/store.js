@@ -10,6 +10,7 @@ export default new Vuex.Store({
     snackbarColor: '',
     login: false,
     username: '',
+    avatar: '',
     permission: 0,
     bloggerUsername: '',
     bloggerAvatar: '',
@@ -30,6 +31,7 @@ export default new Vuex.Store({
       state.login = true
       state.username = userInfo.username
       state.permission = userInfo.permission
+      state.avatar = userInfo.avatar
     },
     logout (state) {
       state.login = false

@@ -4,7 +4,7 @@
         <v-container :class="loginContainer" v-resize="onResize">
             <v-layout align-center justify-center fill-height>
                 <v-flex xs12 md6 lg4>
-                    <login-card></login-card>
+                    <login-card @login="redirectView"></login-card>
                 </v-flex>
             </v-layout>
         </v-container>
@@ -42,6 +42,13 @@ export default {
             } else {
                 this.loginView = "loginViewDesktop"
                 this.loginContainer = "loginDesktop"
+            }
+        },
+        redirectView () {
+            if (this.$route.query.fromURL) {
+                this.$router.push({path: this.$route.query.fromURL})
+            } else {
+                this.$router.push({name: 'home'})
             }
         }
     }

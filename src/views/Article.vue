@@ -5,6 +5,18 @@
             <v-layout>
                 <v-flex xs12 md9 offset-md3>
                     <article-body :article="article" :hover="false"></article-body>
+                    <v-card class="commentCard" v-if="!this.$store.state.login">
+                        <v-card-text>
+                            <p class="text-xs-center">
+                                发表评论请先
+                                <router-link :to="{name: 'login', query: {fromURL: this.$route.fullPath + '#comment-edit'}}">登录</router-link>
+                            </p>
+                        </v-card-text>
+                    </v-card>
+                    <comment-edit-card class="commentCard" v-if="this.$store.state.login"
+                        @commentSubmit="getComments"
+                        :post_id="article.post_id"
+                    ></comment-edit-card>
                     <div v-for="comment in comments" :key="comment.id">
                         <comment-card :content="comment.body_html" :author="comment.author" class="commentCard"
                             :uid="comment.uid" :avatar="comment.avatar" :timestamp="comment.timestamp"
@@ -31,6 +43,7 @@
 <script>
 import ArticleBody from '@/components/article/ArticleBody'
 import CommentCard from '@/components/comment/CommentCard'
+import CommentEditCard from '@/components/comment/EditCard'
 import { api } from "@/libs/api"; 
 import LeftCol from '@/components/LeftCol'
 
@@ -48,8 +61,9 @@ export default {
         leftCol: LeftCol,
         articleBody: ArticleBody,
         commentCard: CommentCard,
+        commentEditCard: CommentEditCard,
     },
-    created () {
+    mounted () {
         this.axios.get(this.$route.query.url).then((response) => {
             this.article = response.data.post
             this.axios.get(api.postPermission, {
@@ -62,14 +76,7 @@ export default {
                 this.deletePermission = false
             })
         })
-        this.axios.get(api.comment, {
-            params: {
-            post_id: this.$route.params.id
-            }
-        }).then((response) => {
-            this.comments = response.data.comments
-            this.total = response.data.count
-        })
+        this.getComments()
     },
     methods: {
         deleteArticle () {
@@ -83,6 +90,15 @@ export default {
         },
         editArticle () {
             this.$router.push({name: 'editArticle', params: {'id': this.article.post_id}})
+        },
+        getComments () {
+            console.log('get comment')
+            this.axios.get(
+                api.postComments.replace(':id', this.$route.params.id)
+            ).then((response) => {
+                this.comments = response.data.comments
+                this.total = response.data.count
+            })
         }
     }
 }

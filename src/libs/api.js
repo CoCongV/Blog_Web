@@ -14,6 +14,7 @@ export var api = {
     posts: '/api/v1/posts/',
     postSearch: '/api/v1/posts/search/',
     postImgUpload: '/api/v1/posts/photo/',
+    postComments: '/api/v1/posts/:id/comments/',
     tag: '/api/v1/posts/tag/',
     time: '/api/v1/posts/time/',
     comment: '/api/v1/comment/',

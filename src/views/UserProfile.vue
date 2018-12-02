@@ -4,14 +4,18 @@
         <v-layout :align-center="alignCenter" justify-center column v-resize="onResize">
             <v-flex xs12 md6 :class="flexClass">
                 <transition name="fade" mode="out-in">
-                    <profile-card :avatar="avatar" :username="username" :about="about" :memberSince="memberSince" :location="location"
-                        :email="email" style="margin-top: 15%" v-if="!editState"></profile-card>
+                    <profile-card :avatar="avatar" :username="username" :about="about"
+                        :memberSince="memberSince" :location="location"
+                        :email="email" style="margin-top: 15%" v-if="!editState"
+                    >
+                        <v-btn slot="confirm" color="success" v-if="!confirmed">验证邮箱</v-btn>
+                    </profile-card>
                     <edit-card :initAvatar="avatar" :initUsername="username" :initAbout="about" ref="edit"
                         :initLocation="location" :initEmail="email" v-if="editState" style="margin-top: 15%"
                     ></edit-card>
                 </transition>
             </v-flex>
-            <v-flex xs12 md6 :class="flexClass">
+            <v-flex xs12 md6 :class="flexClass" style="margin-top: 10px">
                 <transition name="fade">
                     <comment-card :comments="comments" v-if="!editState"></comment-card>
                 </transition>
@@ -124,13 +128,6 @@ export default {
             this.axios.get(api.userComments).then((response) => {
                 this.comments = response.data.comments
             })
-        }).catch((error) => {
-            this.$store.commit('showSnackbar',
-                {
-                    text: error.response.data.message,
-                    color: "error"
-                }
-            )
         })
     }
 }

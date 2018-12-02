@@ -33,6 +33,11 @@
                 </v-list-tile>
             </v-list>
         </v-card-text>
+        <v-card-actions>
+            <v-layout align-center justify-end>
+                <slot name="confirm"></slot>
+            </v-layout>
+        </v-card-actions>
     </v-card>
 </template>
 
