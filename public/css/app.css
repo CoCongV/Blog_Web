@@ -1,0 +1,14 @@
+html, body {
+    min-height: 100%;
+    /* background-color: #3f3f3f; */
+}
+
+.article-overview {
+    overflow: auto;
+}
+.article-body {
+    line-height: 1.8em;
+}
+.article-timestamp {
+    padding-right: 2%;
+}

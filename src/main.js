@@ -1,55 +1,53 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+import axios from 'axios'
 import Vue from 'vue'
+import Vuex from "vuex"
+import VueCookie from 'vue-cookie'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import axios from 'axios'
-import MuseUI from 'muse-ui'
-import 'muse-ui/dist/muse-ui.css'
-import VueCookie from 'vue-cookie'
-import Vuex from 'vuex'
-import VueParticles from 'vue-particles'
-import VueHighlightJS from 'vue-highlightjs'
-import 'muse-ui/dist/theme-carbon.css'
+import './registerServiceWorker'
+import 'vuetify/dist/vuetify.min.css'
+import Vuetify from 'vuetify'
+import VueAxios from 'vue-axios'
 
-Vue.use(MuseUI)
+Vue.config.productionTip = false
+Vue.config.devtools = true
 Vue.use(VueCookie)
 Vue.use(Vuex)
-Vue.use(VueParticles)
-Vue.use(VueHighlightJS)
-Vue.prototype.axios = axios
+Vue.use(Vuetify)
+Vue.use(VueAxios, axios)
+
+Vue.directive(
+  'highlight', function (el) {
+    let blocks = el.querySelectorAll('pre');
+    blocks.forEach(
+      (block) => {
+        hljs.highlightBlock(block)
+      }
+    ) 
+  }
+)
 
 axios.interceptors.request.use(function (config) {
-  // let oldUrl = config.url
-  // config.url = 'http://localhost:8081' + oldUrl
   if (Vue.cookie.get('token')) {
     config.headers.Authorization = 'token ' + Vue.cookie.get('token')
   }
   return config
 })
 
-/* router setup */
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (!store.state.login) {
-      next({
-        name: 'login',
-        query: { requiresAuth: to.fullPath }
-      })
-    } else {
-      next()
-    }
-  } else {
-    next()
+axios.interceptors.response.use((response) =>{
+  return response
+}, (error) => {
+  if (error.response.status === 401) {
+    router.push({name: 'login'})
+  } else if (error.response.status === 500) {
+    store.commit('showSnackbar', {'text': '服务器炸了', 'color': 'error'})
   }
+  return Promise.reject(error)
 })
 
-/* eslint-disable no-new */
 new Vue({
-  el: '#app',
   router,
   store,
-  template: '<App/>',
-  components: { App }
-})
+  render: h => h(App)
+}).$mount('#app')
