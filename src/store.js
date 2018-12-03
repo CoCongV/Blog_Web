@@ -15,6 +15,7 @@ export default new Vuex.Store({
     bloggerUsername: '',
     bloggerAvatar: '',
     aboutBlogger: '',
+    bloggerID: '',
   },
   mutations: {
     showSnackbar (state, config) {
@@ -42,6 +43,7 @@ export default new Vuex.Store({
       state.bloggerUsername = blogger.username
       state.bloggerAvatar = blogger.avatar
       state.aboutBlogger = blogger.about_me
+      state.bloggerID = blogger.uid
     }
   },
   actions: {

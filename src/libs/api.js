@@ -5,7 +5,7 @@ export var api = {
     login: '/api/v1/user/login/',
     user: '/api/v1/user/',
     blogger: '/api/v1/user/blogger/',
-    userProfile: '/api/v1/user/profile/',
+    userProfile: '/api/v1/user/:id/profile/',
     userComments: '/api/v1/user/comment/', // current user comment
     userAvatarUpload: '/api/v1/user/photo/',
     permission: '/api/v1/user/permission',
