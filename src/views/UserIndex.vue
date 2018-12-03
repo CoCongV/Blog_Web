@@ -1,15 +1,10 @@
 <template>
     <v-app>
         <toolbar ></toolbar>
-        <v-layout :align-center="alignCenter" justify-center column v-resize="onResize">
+        <v-layout align-center justify-center v-resize="onResize">
             <v-flex xs12 md6 :class="flexClass">
-                <transition name="fade" mode="out-in">
-                    <profile-card :avatar="avatar" :username="username" :about="about" :memberSince="memberSince" :location="location"
-                        :email="email" style="margin-top: 15%" v-if="!editState"></profile-card>
-                    <edit-card :avatar="avatar" :username="username" :about="about" ref="edit"
-                        :location="location" :email="email" v-if="editState" style="margin-top: 15%"
-                    ></edit-card>
-                </transition>
+                <profile-card :avatar="avatar" :username="username" :about="about" :memberSince="memberSince" :location="location"
+                    :email="email" style="margin-top: 15%" v-if="!editState"></profile-card>
             </v-flex>
         </v-layout>
     </v-app>
@@ -17,9 +12,32 @@
 
 <script>
 import Toolbar from '@/components/Toolbar'
+import ProfileCard from '@/components/profile/ProfileCard'
+import { api } from "@/libs/api";
 export default {
     components: {
         toolbar: Toolbar,
+        profileCard: ProfileCard,
     },
+    data () {
+        return {
+            avatar: '',
+            username: '',
+            about: '',
+            email: '',
+            memberSince: '',
+        }
+    },
+    mounted () {
+        this.axios.get(
+            api.userProfile.replace(':id', this.$route.params.id)
+        ).then((response) => {
+            this.avatar = response.data.avatar
+            this.username = response.data.username
+            this.about = response.data.about_me
+            this.email = response.data.email
+            this.memberSince = response.data.member_since
+        })
+    }
 }
 </script>

@@ -2,12 +2,19 @@
     <v-layout :class="['header', leftcolClass]" ref="leftcol" row align-center justify-center fill-height v-resize="ensureDevice">
         <v-flex xs12>
             <div class="text-xs-center">
-                <v-avatar size="125px">
-                <img
-                    class="img-circle elevation-7 mb-1"
-                    :src="getAvatar"
+                <router-link
+                    :to="{
+                        name: 'userIndex',
+                        params: {id: this.$store.state.bloggerID}
+                    }"
                 >
-                </v-avatar>
+                    <v-avatar size="125px">
+                    <img
+                        class="img-circle elevation-7 mb-1"
+                        :src="getAvatar"
+                    >
+                    </v-avatar>
+                </router-link>
                 <h1 :class="headerAuthorClass">{{getName}}</h1>
                 <p class="subheading text-xs-center" style="line-height: 25px; margin-bottom: 0px;">{{getAbout}}</p>
                 <v-layout align-center justify-center v-show="!mobile">
