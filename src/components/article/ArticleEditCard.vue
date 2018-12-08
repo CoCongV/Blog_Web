@@ -7,8 +7,12 @@
                 </v-flex>
             </v-layout>
         </v-toolbar>
-        <vue-editor v-model="content" :editorOptions="editorSettings">
-        </vue-editor>
+        <vue-editor
+            v-model="content"
+            :editorOptions="editorSettings"
+            useCustomImageHandler
+            @imageAdded="handleImageAdded"
+        ></vue-editor>
         <v-layout class="tag">
             <v-flex xs3 md3 lg2 v-for="tag of tags" :key="tag">
                 <v-chip close @input="remove(tag)">{{tag}}</v-chip>
@@ -24,9 +28,25 @@
             </v-btn>
         </v-layout>
         <v-card-actions>
-            <v-btn color="success" :loading="loadingSubmit" :disabled="loadingSubmit" @click="submit">Submit<v-icon right>check</v-icon></v-btn>
-            <v-btn color="warning" :loading="loadingCache" :disabled="loadingCache">Cache<v-icon right>archive</v-icon></v-btn>
-            <v-btn color="error" @click="reset" :loading="loadingReset" :disabled="loadingReset">Reset<v-icon right>refresh</v-icon></v-btn>
+            <v-btn
+                color="success"
+                :loading="loadingSubmit"
+                :disabled="loadingSubmit"
+                @click="submit"
+            >Submit
+                <v-icon right>check</v-icon>
+            </v-btn>
+            <v-btn color="warning" :loading="loadingCache" :disabled="loadingCache">Cache
+                <v-icon right>archive</v-icon>
+            </v-btn>
+            <v-btn
+                color="error"
+                @click="reset"
+                :loading="loadingReset"
+                :disabled="loadingReset"
+            >Reset
+                <v-icon right>refresh</v-icon>
+            </v-btn>
         </v-card-actions>
     </v-card>
 </template>
@@ -37,7 +57,7 @@ import { api } from "@/libs/api";
 
 export default {
     components: {
-        vueEditor: VueEditor,
+        vueEditor: VueEditor
     },
     props: {
         initContent: {
@@ -56,11 +76,11 @@ export default {
         },
         url: {
             type: String
-        },
+        }
     },
-    data () {
+    data() {
         return {
-            cacheTag: '',
+            cacheTag: "",
             content: this.initContent,
             title: this.initTitle,
             tags: this.initTags,
@@ -71,65 +91,87 @@ export default {
             loadingReset: false,
             editorSettings: {
                 modules: {
-                    syntax: true,
+                    syntax: true
                 }
             }
-        }
+        };
     },
     methods: {
-        addTag () {
+        addTag() {
             if (this.cacheTag) {
-                this.tags.push(this.cacheTag)
-                this.cacheTag = ''
+                this.tags.push(this.cacheTag);
+                this.cacheTag = "";
             }
         },
-        remove (item) {
-            this.tags.splice(this.tags.indexOf(item), 1)
+        remove(item) {
+            this.tags.splice(this.tags.indexOf(item), 1);
         },
-        reset () {
-            this.loadingReset = true
+        reset() {
+            this.loadingReset = true;
             if (this.edit) {
-                this.axios.get(this.url).then((response) => {
-                    this.content = response.data.post.content
-                    this.title = response.data.post.title
-                    this.tags = response.data.post.tags
-                })
+                this.axios.get(this.url).then(response => {
+                    this.content = response.data.post.content;
+                    this.title = response.data.post.title;
+                    this.tags = response.data.post.tags;
+                });
             } else {
-                this.title = ''
-                this.tags = []
-                this.cacheTag = ''
-                this.content = ''
-                }
-            this.loadingReset = false
+                this.title = "";
+                this.tags = [];
+                this.cacheTag = "";
+                this.content = "";
+            }
+            this.loadingReset = false;
         },
-        submit () {
-            this.loadingSubmit = true
+        submit() {
+            this.loadingSubmit = true;
             let content = {
                 tags: this.tags,
                 content: this.content,
                 title: this.title
-            }
+            };
             this.axios({
-                method: this.edit ? 'patch' : 'post',
+                method: this.edit ? "patch" : "post",
                 url: this.edit ? this.url : api.posts,
                 data: content
-            }).then((response) => {
-                this.$store.commit('showSnackbar', {text: 'Public Success', color: 'success'})
-                this.$router.push({name: 'home'})
-            }).catch((error) => {
-                console.log(error.response)
-                this.$store.commit('showSnackbar', {text: error.response.data.message, color: 'error'})
-            }).then(() => {
-                this.loadingSubmit = false
             })
+                .then(response => {
+                    this.$store.commit("showSnackbar", {
+                        text: "Public Success",
+                        color: "success"
+                    });
+                    this.$router.push({ name: "home" });
+                })
+                .catch(error => {
+                    console.log(error.response);
+                    this.$store.commit("showSnackbar", {
+                        text: error.response.data.message,
+                        color: "error"
+                    });
+                })
+                .then(() => {
+                    this.loadingSubmit = false;
+                });
+        },
+        handleImageAdded(file, Editor, cursorLocation) {
+            console.log('image')
+            let formData = new FormData();
+            formData.append("image", file);
+            this.axios({
+                url: api.postImgUpload,
+                method: "PUT",
+                data: formData
+            }).then(result => {
+                let url = result.data.url;
+                Editor.insertEmbed(cursorLocation, "image", url);
+            });
         }
-    },
-}
+    }
+};
 </script>
 
 <style scoped>
 .tag {
-    margin: 10px 0px 10px 0px
+    margin: 10px 0px 10px 0px;
 }
 .custom-loader {
     animation: loader 1s infinite;
