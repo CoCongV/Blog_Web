@@ -5,6 +5,7 @@
         </v-toolbar>
         <v-card-text>
             <v-form v-model="valid" lazy-validation ref="form">
+                <my-avatar :initAvatar="avatar"></my-avatar>
                 <v-text-field v-model="username" :rules="nameRules" :counter="18" label="Username" required></v-text-field>
                 <v-text-field v-model="oldPassword" :rules="oldPasswordRules" label="Old Password" type="password"></v-text-field>
                 <v-text-field v-model="password" :rules="passwordRules" label="New Password" type="password" hint="0 ~ 20 charactors"></v-text-field>
@@ -18,6 +19,7 @@
 </template>
 
 <script>
+import myAvatar from '@/components/profile/avatar'
 export default {
     props: {
         initUsername: '',
@@ -25,6 +27,9 @@ export default {
         initLocation: '',
         initAbout: '',
         initAvatar: '',
+    },
+    components: {
+        myAvatar: myAvatar
     },
     data () {
         return {
