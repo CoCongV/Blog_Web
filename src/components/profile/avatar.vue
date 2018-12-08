@@ -4,7 +4,7 @@
         <my-upload v-model="show" field="avatar"
             @crop-success="cropSuccess"
             @crop-upload-success="cropUploadSuccess"
-            @crop-upload-fail="cronUploadFail"
+            @crop-upload-fail="cropUploadFail"
             :params="params" ref="upload"
         ></my-upload>
     </v-avatar>
@@ -16,7 +16,9 @@ import data2blob from '@/libs/data2blob.js'
 import { api } from "@/libs/api";
 export default {
     props: {
-        initAvatar: '',
+        initAvatar: {
+            type: String,
+        },
     },
     data () {
         return {

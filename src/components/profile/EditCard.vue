@@ -22,11 +22,21 @@
 import myAvatar from '@/components/profile/avatar'
 export default {
     props: {
-        initUsername: '',
-        initEmail: '',
-        initLocation: '',
-        initAbout: '',
-        initAvatar: '',
+        initUsername: {
+            type: String
+        },
+        initEmail: {
+            type: String
+        },
+        initLocation: {
+            type: String
+        },
+        initAbout: {
+            type: String
+        },
+        initAvatar: {
+            type: String
+        },
     },
     components: {
         myAvatar: myAvatar

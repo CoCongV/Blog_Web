@@ -24,8 +24,8 @@
                     </div>
                 </v-flex>
             </v-layout>
-            <v-speed-dial v-model="fab" right bottom direction="top" open-on-hover fixed v-if="deletePermission">
-                <v-btn slot="activator" v-model="fab" color="blue darken-2" fab>
+            <v-speed-dial fab right bottom direction="top" open-on-hover fixed v-if="deletePermission">
+                <v-btn slot="activator" color="blue darken-2" fab>
                     <v-icon>apps</v-icon>
                     <v-icon>close</v-icon>
                 </v-btn>

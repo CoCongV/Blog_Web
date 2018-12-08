@@ -21,7 +21,10 @@
 <script>
 export default {
     props: {
-        comments: []
+        comments: {
+            type: Array,
+            default: new Array()
+        }
     }
 }
 </script>

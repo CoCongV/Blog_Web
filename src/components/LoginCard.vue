@@ -58,9 +58,6 @@ export default {
             this.$refs.form.reset()
         }
     },
-    mounted () {
-        console.log(this.$route)
-    }
 }
 </script>
 
