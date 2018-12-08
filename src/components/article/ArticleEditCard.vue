@@ -40,13 +40,23 @@ export default {
         vueEditor: VueEditor,
     },
     props: {
-        initContent: '',
-        edit: false,
-        initTitle: '',
-        initTags: {
-            default: []
+        initContent: {
+            type: String
         },
-        url: '',
+        edit: {
+            type: Boolean,
+            default: false
+        },
+        initTitle: {
+            type: String
+        },
+        initTags: {
+            type: Array,
+            default: new Array()
+        },
+        url: {
+            type: String
+        },
     },
     data () {
         return {

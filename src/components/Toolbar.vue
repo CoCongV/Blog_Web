@@ -40,7 +40,10 @@
 <script>
 export default {
     props: {
-        title: 'Personal Center'
+        title: {
+            type: String,
+            default: "Personal Center"
+        }
     },
     data () {
         return {

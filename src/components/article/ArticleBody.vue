@@ -9,7 +9,7 @@
             <v-icon>calendar_today</v-icon>&nbsp;{{ article.timestamp }}
         </p>
         <v-card-text class="article-overview">
-            <div v-html="article.body_html" v-highlight></div>
+            <div class="ql-editor" v-html="article.body_html" v-highlight></div>
         </v-card-text>
         <div>
             <v-chip label text-color="white" v-for="tag in article.tags" :key="tag" :color="getColor()" small>
