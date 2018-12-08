@@ -1,6 +1,8 @@
 .DS_Store
 node_modules
 /dist
+blog.tar
+makefile
 
 # local env files
 .env.local
