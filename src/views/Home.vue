@@ -63,7 +63,7 @@ export default {
             articles: [],
             length: 0,
             load: false,
-            page: 1
+            page: 1,
         };
     },
     components: {
@@ -110,12 +110,14 @@ export default {
             this.load = true;
         },
         bindPageChange(page) {
-            console.log(page);
             this.$router.push({ name: "postPage", params: { page: page } });
-            this.$router.go(0);
+            // this.$router.go(0);
         }
     },
     computed: {
+        test () {
+            console.log('test')
+        },
         addArticlePermission() {
             if (this.$store.state.permission >= 255) {
                 return true;
@@ -140,6 +142,18 @@ export default {
             this.page = parseInt(page)
             console.log(this.page)
             this.loadArticle(this.page);
+        }
+    },
+    watch: {
+        "$route": function(val) {
+            let page = val.params.page
+            if (page) {
+                this.page = parseInt(page)
+                this.loadArticle(this.page)
+            } else {
+                this.loadArticle(1)
+            }
+            this.$vuetify.goTo(0)
         }
     }
 };
