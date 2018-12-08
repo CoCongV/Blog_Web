@@ -1,21 +1,14 @@
 <template>
-    <v-layout>
-        <v-flex xs12 md9 offset-md3>
-            <v-layout column>
-                <v-flex xs12 v-for="article in articles" :key="article.id" class="article-card">
-                    <router-link 
-                        :to="{ name: 'article',
-                        params: {id: article.post_id},
-                        query: {url: article.url}}"
-                        style="text-decoration: none"
-                    >
-                        <my-article :article="article" name="article"></my-article>
-                    </router-link>
-                </v-flex>
-            </v-layout>
-            <div class="text-xs-center">
-              <v-pagination v-model="page" :length="length"></v-pagination>
-            </div>
+    <v-layout column>
+        <v-flex xs12 v-for="article in articles" :key="article.id" class="article-card">
+            <router-link 
+                :to="{ name: 'article',
+                params: {id: article.post_id},
+                query: {url: article.url}}"
+                style="text-decoration: none"
+            >
+                <my-article :article="article" name="article"></my-article>
+            </router-link>
         </v-flex>
     </v-layout>
 </template>
@@ -24,21 +17,9 @@
 import ArticleBody from '@/components/article/ArticleBody'
 import { api } from '@/libs/api'
 export default {
-    data: function () {
-        return {
-            articles: [],
-            length: 0,
-            page: 1,
-        }
-    },
+    props: ['articles'],
     components: {
         myArticle: ArticleBody
-    },
-    mounted: function () {
-      this.axios.get(api.posts).then((response) => {
-        this.articles = response.data.posts
-        this.length = response.data.pages
-      })
     },
     watch: {
         page: function(newVal, oldVal) {

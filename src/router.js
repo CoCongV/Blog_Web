@@ -14,6 +14,11 @@ export default new Router({
       component: () => import('@/views/Home')
     },
     {
+      path: '/:page(\\d+)/',
+      name: 'postPage',
+      component: () => import('@/views/Home')
+    },
+    {
       path: '/article/:id(\\d+)/',
       name: 'article',
       component: () => import('@/views/Article')
