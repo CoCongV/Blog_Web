@@ -115,9 +115,6 @@ export default {
         }
     },
     computed: {
-        test () {
-            console.log('test')
-        },
         addArticlePermission() {
             if (this.$store.state.permission >= 255) {
                 return true;
