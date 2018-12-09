@@ -52,6 +52,11 @@
                     <v-icon>edit</v-icon>
                 </v-btn>
             </v-speed-dial>
+            <v-btn v-else fab fixed right bottom 
+                color="pink lighten-3" @click="$vuetify.goTo(0)"
+            >
+                <v-icon>arrow_upward</v-icon>
+            </v-btn>
         </v-container>
     </div>
 </template>

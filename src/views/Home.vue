@@ -26,6 +26,9 @@
                     <v-icon>apps</v-icon>
                     <v-icon>close</v-icon>
                 </v-btn>
+                <v-btn fab small color="pink lighten-3" @click="$vuetify.goTo(0)">
+                    <v-icon>arrow_upward</v-icon>
+                </v-btn>
                 <v-btn fab small color="error" v-if="getLoginState" @click="logout">
                     <v-icon>exit_to_app</v-icon>
                 </v-btn>
@@ -111,8 +114,7 @@ export default {
         },
         bindPageChange(page) {
             this.$router.push({ name: "postPage", params: { page: page } });
-            // this.$router.go(0);
-        }
+        },
     },
     computed: {
         addArticlePermission() {
