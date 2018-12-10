@@ -72,7 +72,7 @@ export default {
         },
         initTags: {
             type: Array,
-            default: new Array()
+            default: () => {return []}
         },
         url: {
             type: String
@@ -93,7 +93,7 @@ export default {
                 modules: {
                     syntax: true
                 }
-            }
+            },
         };
     },
     methods: {
@@ -152,6 +152,30 @@ export default {
                     this.loadingSubmit = false;
                 });
         },
+        articlePost () {
+            if (!this.title || !this.content) {
+                return
+            }
+            let content = {
+                tags: this.tags,
+                content: this.content,
+                title: this.title
+            };
+            this.axios({
+                method: this.edit ? "patch" : "post",
+                url: this.edit ? this.url : api.posts,
+                data: content
+            }).then(response => {
+                this.url = response.data.url
+                this.edit = true
+            }).catch(error => {
+                console.log(error.response);
+                this.$store.commit("showSnackbar", {
+                    text: error.response.data.message,
+                    color: "error"
+                });
+            })
+        },
         handleImageAdded(file, Editor, cursorLocation) {
             console.log('image')
             let formData = new FormData();
@@ -165,6 +189,9 @@ export default {
                 Editor.insertEmbed(cursorLocation, "image", url);
             });
         }
+    },
+    mounted () {
+        setInterval(this.articlePost, 10000)
     }
 };
 </script>
