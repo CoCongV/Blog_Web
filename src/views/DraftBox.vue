@@ -58,7 +58,7 @@ import userAgent from "@/libs/userAgent";
 import { api } from "@/libs/api";
 
 export default {
-    name: "home",
+    name: "draftBox",
     data() {
         return {
             fab: false,
@@ -100,7 +100,8 @@ export default {
             this.axios
                 .get(api.posts, {
                     params: {
-                        page: page
+                        page: page,
+                        draft: true
                     }
                 })
                 .then(response => {
@@ -113,7 +114,7 @@ export default {
             this.load = true;
         },
         bindPageChange(page) {
-            this.$router.push({ name: "postPage", params: { page: page } });
+            this.$router.push({ name: "draftBox", params: { page: page } });
         },
     },
     computed: {

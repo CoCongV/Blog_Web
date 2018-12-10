@@ -19,6 +19,11 @@ export default new Router({
       component: () => import('@/views/Home')
     },
     {
+      path: '/draftBox/:page(\\d+)/',
+      name: 'draftBox',
+      component: () => import('@/views/DraftBox')
+    },
+    {
       path: '/article/:id(\\d+)/',
       name: 'article',
       component: () => import('@/views/Article')
