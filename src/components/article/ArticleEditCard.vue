@@ -167,7 +167,7 @@ export default {
                 let response = await this.postArticle(content)
                 this.$store.commit("showSnackbar", {text: "Draft Success", color: "success"})
                 if (!isCycle) {
-                    this.$router.push({name: 'draftBox', page: 1})
+                    this.$router.push({name: 'draftBox', params: {page: 1}})
                 } else {
                     this.url = response.data.url
                 }
