@@ -1,7 +1,7 @@
 <template>
     <v-card>
         <v-toolbar color="Primary">
-            <v-toolbar-title>Login Form</v-toolbar-title>
+            <v-toolbar-title><p>Login Form</p></v-toolbar-title>
         </v-toolbar>
         <v-card-text>
             <v-form v-model="valid" lazy-validation ref="form">
@@ -13,6 +13,9 @@
             <v-layout justify-space-around>
                 <v-btn :disabled="!valid" @click="submit" color="cyan darken-2">提交</v-btn>
                 <v-btn @click="clear">重置</v-btn>
+                <router-link :to="{name: 'register'}" tag="button">
+                    <v-btn color="teal darken-2">注册</v-btn>
+                </router-link>
             </v-layout>
         </v-card-actions>
     </v-card>
