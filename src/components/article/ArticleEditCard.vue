@@ -84,7 +84,7 @@ export default {
             type: String
         }
     },
-    data() {
+    data () {
         return {
             cacheTag: "",
             content: this.initContent,
@@ -172,6 +172,7 @@ export default {
                     this.url = response.data.url
                 }
             } catch(e) {
+                throw e
                 this.$store.commit("showSnackbar", {text: e.response.data.message, color: "error"})
             } finally {
                 this.loadingDraft = false

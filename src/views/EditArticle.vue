@@ -5,7 +5,7 @@
             <v-layout align-center justify-center>
                 <v-flex xs12 md9 lg6>
                     <edit-card :initTitle="title" :initContent="content"
-                        :initTags="tags" :url="url" :edit="edit" v-if="render"
+                        :initTags="tags" :initUrl="url" :edit="edit" v-if="render"
                     ></edit-card>
                 </v-flex>
             </v-layout>
