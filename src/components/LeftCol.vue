@@ -114,7 +114,7 @@
     .leftcol-desktop {
         position: fixed;
         width: 20%;
-        background-image: url("/img/bg-9.jpg");
+        background-image: url("/img/bg-1.jpg");
         background-position: center center;
         background-size: cover;
         color: aliceblue;
@@ -122,7 +122,7 @@
     }
     .leftcol-mobile {
         height: auto;
-        background-image: url("/img/bg-9.jpg");
+        background-image: url("/img/bg-1.jpg");
         background-position: center center;
         background-size: cover;
         padding-top: 10px;

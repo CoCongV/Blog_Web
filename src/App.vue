@@ -4,17 +4,21 @@
       <router-view></router-view>
     </div>
     <snackbar></snackbar>
+    <circle-progress></circle-progress>
+    <overlay></overlay>
   </v-app>
 </template>
 
 <script>
+import circleProgress from "@/components/progress/Circle"
 import Snackbar from '@/components/Snackbar'
-import Home from '@/views/Home'
+import Overlay from '@/components/Overlay'
 import { api } from "@/libs/api";
 export default {
   components: {
-    home: Home,
     snackbar: Snackbar,
+    circleProgress: circleProgress,
+    overlay: Overlay,
   },
   mounted () {
     this.axios.get(api.token).then((response) => {

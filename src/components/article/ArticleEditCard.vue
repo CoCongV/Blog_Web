@@ -36,7 +36,13 @@
             >Submit
                 <v-icon right>check</v-icon>
             </v-btn>
-            <v-btn color="warning" :loading="loadingCache" :disabled="loadingCache">Cache
+            <v-btn 
+                color="warning" 
+                :loading="loadingDraft"
+                :disabled="loadingDraft"
+                @click="draftArticle"
+            >
+                Draft
                 <v-icon right>archive</v-icon>
             </v-btn>
             <v-btn
@@ -72,13 +78,13 @@ export default {
         },
         initTags: {
             type: Array,
-            default: new Array()
+            default: () => {return []}
         },
-        url: {
+        initUrl: {
             type: String
         }
     },
-    data() {
+    data () {
         return {
             cacheTag: "",
             content: this.initContent,
@@ -87,13 +93,15 @@ export default {
             updated: false,
             loader: null,
             loadingSubmit: false,
-            loadingCache: false,
+            loadingDraft: false,
             loadingReset: false,
             editorSettings: {
                 modules: {
                     syntax: true
                 }
-            }
+            },
+            url: this.initUrl,
+            timer: () => {}
         };
     },
     methods: {
@@ -122,38 +130,62 @@ export default {
             }
             this.loadingReset = false;
         },
-        submit() {
+        async submit() {
             this.loadingSubmit = true;
             let content = {
                 tags: this.tags,
                 content: this.content,
-                title: this.title
-            };
-            this.axios({
+                title: this.title,
+                draft: false
+            }
+            try {
+                let response = await this.postArticle(content)
+                this.$store.commit("showSnackbar", {text: "Public Success", color: "success"})
+                this.$router.push({name: "home"})
+            } catch (e) {
+                this.$store.commit("showSnackbar", {text: e.response.data.message, color: "error"})
+            } finally {
+                this.loadingSubmit = false
+            }
+        },
+        async postArticle (content) {
+            return this.axios({
                 method: this.edit ? "patch" : "post",
                 url: this.edit ? this.url : api.posts,
                 data: content
             })
-                .then(response => {
-                    this.$store.commit("showSnackbar", {
-                        text: "Public Success",
-                        color: "success"
-                    });
-                    this.$router.push({ name: "home" });
-                })
-                .catch(error => {
-                    console.log(error.response);
-                    this.$store.commit("showSnackbar", {
-                        text: error.response.data.message,
-                        color: "error"
-                    });
-                })
-                .then(() => {
-                    this.loadingSubmit = false;
-                });
+        },
+        async draftArticle (event = undefined, isCycle = false) {
+            this.loadingDraft = true
+            let content = {
+                tags: this.tags,
+                content: this.content,
+                title: this.title,
+                draft: true
+            }
+            try {
+                let response = await this.postArticle(content)
+                this.$store.commit("showSnackbar", {text: "Draft Success", color: "success"})
+                if (!isCycle) {
+                    this.$router.push({name: 'draftBox', params: {page: 1}})
+                } else {
+                    this.url = response.data.url
+                }
+            } catch(e) {
+                throw e
+                this.$store.commit("showSnackbar", {text: e.response.data.message, color: "error"})
+            } finally {
+                this.loadingDraft = false
+            }
+        },
+        autoDraft () {
+            if (this.title && this.content) {
+                this.draftArticle(undefined, true)
+            } else {
+                return
+            }
         },
         handleImageAdded(file, Editor, cursorLocation) {
-            console.log('image')
             let formData = new FormData();
             formData.append("image", file);
             this.axios({
@@ -165,6 +197,12 @@ export default {
                 Editor.insertEmbed(cursorLocation, "image", url);
             });
         }
+    },
+    mounted () {
+        this.timer = setInterval(this.autoDraft, 10000)
+    },
+    beforeDestroy () {
+        clearInterval(this.timer)
     }
 };
 </script>

@@ -58,7 +58,7 @@ import userAgent from "@/libs/userAgent";
 import { api } from "@/libs/api";
 
 export default {
-    name: "home",
+    name: "draftBox",
     data() {
         return {
             fab: false,
@@ -72,7 +72,7 @@ export default {
     components: {
         LeftCol: LeftCol,
         articleList: ArticleList,
-        pagination: Pagination,
+        pagination: Pagination
     },
     methods: {
         profile() {
@@ -97,10 +97,11 @@ export default {
             this.$router.push({ name: "addArticle" });
         },
         async getArticle(page) {
-            await this.axios
+            this.axios
                 .get(api.posts, {
                     params: {
-                        page: page
+                        page: page,
+                        draft: true
                     }
                 })
                 .then(response => {
@@ -111,10 +112,9 @@ export default {
         async loadArticle(page) {
             await this.getArticle(page);
             this.load = true;
-            this.$store.commit('hideCircleProgress')
         },
         bindPageChange(page) {
-            this.$router.push({ name: "postPage", params: { page: page } });
+            this.$router.push({ name: "draftBox", params: { page: page } });
         },
     },
     computed: {
@@ -132,9 +132,6 @@ export default {
                 return false;
             }
         }
-    },
-    created() {
-        this.$store.commit('showCircleProgress')
     },
     mounted() {
         let page = this.$route.params.page;
