@@ -72,7 +72,7 @@ export default {
     components: {
         LeftCol: LeftCol,
         articleList: ArticleList,
-        pagination: Pagination
+        pagination: Pagination,
     },
     methods: {
         profile() {
@@ -97,7 +97,7 @@ export default {
             this.$router.push({ name: "addArticle" });
         },
         async getArticle(page) {
-            this.axios
+            await this.axios
                 .get(api.posts, {
                     params: {
                         page: page
@@ -111,6 +111,7 @@ export default {
         async loadArticle(page) {
             await this.getArticle(page);
             this.load = true;
+            this.$store.commit('hideCircleProgress')
         },
         bindPageChange(page) {
             this.$router.push({ name: "postPage", params: { page: page } });
@@ -131,6 +132,9 @@ export default {
                 return false;
             }
         }
+    },
+    created() {
+        this.$store.commit('showCircleProgress')
     },
     mounted() {
         let page = this.$route.params.page;
