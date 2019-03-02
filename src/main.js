@@ -16,6 +16,9 @@ Vue.use(VueCookie)
 Vue.use(Vuex)
 Vue.use(Vuetify)
 Vue.use(VueAxios, axios)
+const VueUploadComponent = require('vue-upload-component')
+Vue.component('file-upload', VueUploadComponent)
+
 
 Vue.directive(
   'highlight', function (el) {

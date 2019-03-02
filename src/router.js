@@ -76,8 +76,18 @@ export default new Router({
       component: () => import('@/views/UserIndex')
     },
     {
-      path: '/books',
+      path: '/books/',
       name: 'books',
+      component: () => import('@/views/BookCloud')
+    },
+    {
+      path: '/books/:page(\\d+)/',
+      name: 'bookPage',
+      component: () => import('@/views/BookCloud')
+    },
+    {
+      path: '/books/search/:searchParam/:page(\\d+)/',
+      name: 'bookSearch',
       component: () => import('@/views/BookCloud')
     }
   ]

@@ -26,6 +26,7 @@ export var api = {
     usernameExist: '/api/v1/auth/username_exist/',
     // Book
     books: '/api/v1/books/',
-    book: '/api/v1/books/:book_id/'
+    book: '/api/v1/books/:book_id/',
+    bookSearch: '/api/v1/books/search/'
   }
   

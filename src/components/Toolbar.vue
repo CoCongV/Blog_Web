@@ -40,6 +40,8 @@
                     append-icon="search"
                     color="white"
                     hide-detail
+                    @keyup.enter="search"
+                    v-model="searchParam"
                 ></v-text-field>
             </v-layout>
         </v-toolbar>
@@ -56,7 +58,7 @@ export default {
     },
     data() {
         return {
-            drawer: null,
+            drawer: false,
             tools: [
                 { icon: "label", title: "Spider", click: this.test },
                 {
@@ -76,7 +78,8 @@ export default {
                     title: "Personal Center",
                     click: () => {this.$router.push({name: "profile"})}
                 }
-            ]
+            ],
+            searchParam: ''
         };
     },
     methods: {
@@ -86,6 +89,11 @@ export default {
                 color: "error"
             });
         },
+        search() {
+            if (this.searchParam) {
+                this.$emit('search')
+            }
+        }
     },
     computed: {
         getUsername() {
