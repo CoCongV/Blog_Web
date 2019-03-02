@@ -74,6 +74,11 @@ export default new Router({
       path: '/user/:id(\\d+)/index/',
       name: 'userIndex',
       component: () => import('@/views/UserIndex')
+    },
+    {
+      path: '/books',
+      name: 'books',
+      component: () => import('@/views/BookCloud')
     }
   ]
 })

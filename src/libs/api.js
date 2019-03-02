@@ -23,6 +23,9 @@ export var api = {
     password: '/api/v1/auth/password/',
     postPermission: '/api/v1/auth/post_permission/',
     emailExist: '/api/v1/auth/email_exist/',
-    usernameExist: '/api/v1/auth/username_exist/'
+    usernameExist: '/api/v1/auth/username_exist/',
+    // Book
+    books: '/api/v1/books/',
+    book: '/api/v1/books/:book_id/'
   }
   

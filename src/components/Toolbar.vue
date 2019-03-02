@@ -31,7 +31,7 @@
             <router-link :to="{name: 'home'}">
                 <v-icon class="mx-3">home</v-icon>
             </router-link>
-            <v-toolbar-title @click="profile">{{title}}</v-toolbar-title>
+            <v-toolbar-title>{{title}}</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-layout row align-center style="max-width: 20%">
                 <v-text-field
@@ -52,7 +52,7 @@ export default {
         title: {
             type: String,
             default: "Personal Center"
-        }
+        },
     },
     data() {
         return {
@@ -64,6 +64,17 @@ export default {
                     title: "Draft Box",
                     click: () => {this.$router.push({name: "draftBox", params: {page: 1}})},
                     hide: this.isBlogger
+                },
+                {
+                    icon: "book",
+                    title: "Book Cloud",
+                    click: () => {this.$router.push({name: "books"})},
+                    hide: this.isResource
+                },
+                {
+                    icon: "person",
+                    title: "Personal Center",
+                    click: () => {this.$router.push({name: "profile"})}
                 }
             ]
         };
@@ -75,13 +86,6 @@ export default {
                 color: "error"
             });
         },
-        profile() {
-            if (this.$store.state.login) {
-                this.$router.push({ name: "profile" });
-            } else {
-                this.$router.push({ name: "login" });
-            }
-        },
     },
     computed: {
         getUsername() {
@@ -92,6 +96,13 @@ export default {
                 return true;
             } else {
                 return false;
+            }
+        },
+        isResource() {
+            if (this.$store.state.permission >= 10) {
+                return true
+            } else {
+                return false
             }
         }
     }
