@@ -15,7 +15,7 @@
                     v-for="tool in tools"
                     :key="tool.title"
                     @click="tool.click"
-                    :v-if="!tool.hide"
+                    v-if="!tool.hide"
                 >
                     <v-list-tile-action>
                         <v-icon>{{tool.icon}}</v-icon>
@@ -60,23 +60,30 @@ export default {
         return {
             drawer: false,
             tools: [
-                { icon: "label", title: "Spider", click: this.test },
+                { icon: "label", title: "Spider", click: this.test, hide: false },
                 {
                     icon: "drafts",
                     title: "Draft Box",
                     click: () => {this.$router.push({name: "draftBox", params: {page: 1}})},
-                    hide: this.isBlogger
+                    hide: !this.isBlogger()
                 },
                 {
                     icon: "book",
                     title: "Book Cloud",
-                    click: () => {this.$router.push({name: "books"})},
-                    hide: this.isResource
+                    click: () => {
+                        if (this.isResource) {
+                            this.$router.push({name: "books"})
+                        } else {
+                            this.$store.commit('showSnackbar', {'text': '权限被拒绝', color: 'error'})
+                        }
+                    },
+                    hide: false
                 },
                 {
                     icon: "person",
                     title: "Personal Center",
-                    click: () => {this.$router.push({name: "profile"})}
+                    click: () => {this.$router.push({name: "profile"})},
+                    hide: false
                 }
             ],
             searchParam: ''
@@ -93,11 +100,6 @@ export default {
             if (this.searchParam) {
                 this.$emit('search')
             }
-        }
-    },
-    computed: {
-        getUsername() {
-            return this.$store.state.username;
         },
         isBlogger() {
             if (this.$store.state.permission >= 255) {
@@ -105,6 +107,11 @@ export default {
             } else {
                 return false;
             }
+        },
+    },
+    computed: {
+        getUsername() {
+            return this.$store.state.username;
         },
         isResource() {
             if (this.$store.state.permission >= 10) {

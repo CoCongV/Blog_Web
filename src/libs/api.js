@@ -27,6 +27,7 @@ export var api = {
     // Book
     books: '/api/v1/books/',
     book: '/api/v1/books/:book_id/',
-    bookSearch: '/api/v1/books/search/'
+    bookSearch: '/api/v1/books/search/',
+    bookPush: '/api/v1/books/push/:book_id/',
   }
   

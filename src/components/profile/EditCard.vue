@@ -11,6 +11,7 @@
                 <v-text-field v-model="password" :rules="passwordRules" label="New Password" type="password" hint="0 ~ 20 charactors"></v-text-field>
                 <v-text-field v-model="repeatPassword" :rules="repeatPasswordRules" label="Confirm Password" type="password"></v-text-field>
                 <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
+                <v-text-field v-model="kindle_email" :rules="emailRules" label="Kindle E-mail"></v-text-field>
                 <v-text-field v-model="location" label="Location"></v-text-field>
                 <v-textarea label="About Me" v-model="about"></v-textarea>
             </v-form>
@@ -37,6 +38,9 @@ export default {
         initAvatar: {
             type: String
         },
+        initKindleEmail: {
+            type: String
+        }
     },
     components: {
         myAvatar: myAvatar
@@ -62,6 +66,9 @@ export default {
                 v => !!v || 'E-mail is required',
                 v => /.+@.+/.test(v) || 'E-mail must be valid',
             ],
+            emailRules: [
+                v => !v || /.+@.+/.test(v) || 'E-mail must be valid',
+            ],
             nameRules: [
                 v => !!v || 'Name is required',
                 v => (v && v.length <= 18) || 'Name must be less than 10 characters',
@@ -72,6 +79,7 @@ export default {
             location: this.initLocation,
             about: this.initAbout,
             avatar: this.initAvatar,
+            kindle_email: this.initKindleEmail,
         }
     }
 }

@@ -11,7 +11,7 @@
                         <v-btn slot="confirm" color="success" v-if="!confirmed">验证邮箱</v-btn>
                     </profile-card>
                     <edit-card :initAvatar="avatar" :initUsername="username" :initAbout="about" ref="edit"
-                        :initLocation="location" :initEmail="email" v-if="editState" style="margin-top: 15%"
+                        :initLocation="location" :initEmail="email" :initKindleEmail="kindle_email" v-if="editState" style="margin-top: 15%"
                     ></edit-card>
                 </transition>
             </v-flex>
@@ -55,6 +55,7 @@ export default {
             about: '',
             memberSince: '',
             email: '',
+            kindle_email: '',
             comments: [],
             alignCenter: true,
             flexClass: "flexDesktop",
@@ -63,7 +64,7 @@ export default {
             last_seen: '',
             confirmed: true,
             fab: false,
-            toolbarTitle: 'Personal Center'
+            toolbarTitle: 'Personal Center',
         }
     },
     components: {
@@ -93,6 +94,7 @@ export default {
                 username: editCard.username,
                 location: editCard.location,
                 about_me: editCard.about,
+                kindle_email: editCard.kindle_email,
             }
             if (editCard.password) {
                 body.password = md5.hex(editCard.password)
@@ -121,6 +123,7 @@ export default {
             this.username = response.data.username
             this.memberSince = response.data.member_since
             this.email = response.data.email
+            this.kindle_email = response.data.kindle_email
             this.location = response.data.location
             this.lastSeen = response.data.last_seen
             this.confirmed = response.data.confirmed
