@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <toolbar :title="toolbarTitle"></toolbar>
-        <v-layout :align-center="alignCenter" justify-center column v-resize="onResize">
+        <v-layout :align-center="alignCenter" justify-center column v-resize="onResize" v-if="!loading">
             <v-flex xs12 md6 :class="flexClass">
                 <transition name="fade" mode="out-in">
                     <profile-card :avatar="avatar" :username="username" :about="about"
@@ -65,6 +65,7 @@ export default {
             confirmed: true,
             fab: false,
             toolbarTitle: 'Personal Center',
+            loading: false,
         }
     },
     components: {
@@ -127,6 +128,8 @@ export default {
     },
     mounted () {
         this.onResize()
+        this.$store.commit('showCircleProgress')
+        this.loading = true
         this.axios.get(api.user).then((response) => {
             this.avatar = response.data.avatar
             this.username = response.data.username
@@ -140,6 +143,9 @@ export default {
             this.axios.get(api.userComments).then((response) => {
                 this.comments = response.data.comments
             })
+        }).finally(() => {
+            this.loading = false
+            this.$store.commit('hideCircleProgress')
         })
     }
 }

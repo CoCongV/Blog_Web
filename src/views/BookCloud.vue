@@ -1,7 +1,7 @@
 <template>
     <v-app dark>
         <toolbar :title="toolbarTitle" ref="toolbar" @search="search"></toolbar>
-        <v-container class="bookContainer" fluid grid-list-md>
+        <v-container class="bookContainer" fluid grid-list-md v-if="!loading">
             <v-layout row wrap>
                 <v-flex v-for="book in books" :key="book.id" xs12 md4>
                     <v-card>
@@ -93,7 +93,7 @@ export default {
             toolbarTitle: "Book Cloud",
             fab: false,
             desktop: true,
-            load: false,
+            loading: false,
             books: [],
             upload: false,
             files: [],
@@ -187,11 +187,13 @@ export default {
         },
         inputFile(newFile, oldFile) {},
         bindPageChange(page) {
-            this.$router.push({ name: "bookPage", params: { page: page } });
+            this.$router.push({ name: this.$route.name, params: { page: page } });
         },
         async loadBooks(page) {
+            this.$store.commit('showCircleProgress')
+            this.loading = true;
             await this.getBooks(page);
-            this.load = true;
+            this.loading = false;
             this.$store.commit("hideCircleProgress");
         },
         async getBooks(page) {
@@ -213,9 +215,11 @@ export default {
                 });
         },
         async loadSearchBooks(page, param) {
-            await this.getSearchBooks(page, param);
-            this.load = true;
-            this.$store.commit("hideCircleProgress");
+            this.$store.commit('showCircleProgress')
+            this.loading = true
+            await this.getSearchBooks(page, param)
+            this.loading = false
+            this.$store.commit("hideCircleProgress")
         },
         async getSearchBooks(page, param) {
             await this.axios
