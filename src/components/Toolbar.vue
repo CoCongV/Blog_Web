@@ -11,19 +11,33 @@
             <v-divider></v-divider>
             <v-subheader class="mt-3 grey--text text--darken-1">TOOLS</v-subheader>
             <v-list dense class="pt-0">
-                <v-list-tile
+                <div
                     v-for="tool in tools"
                     :key="tool.title"
-                    @click="tool.click"
-                    v-if="!tool.hide"
                 >
-                    <v-list-tile-action>
-                        <v-icon>{{tool.icon}}</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-content>
-                        <v-list-tile-title class="subheading">{{tool.title}}</v-list-tile-title>
-                    </v-list-tile-content>
-                </v-list-tile>
+                    <v-list-tile
+                        @click="tool.click"
+                        v-if="!tool.hide"
+                    >
+                        <v-list-tile-action>
+                            <v-icon>{{tool.icon}}</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                            <v-list-tile-title class="subheading">{{tool.title}}</v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+                </div>
+                <v-divider></v-divider>
+                <div>
+                    <v-list-tile @click="logout">
+                        <v-list-tile-action>
+                            <v-icon>exit_to_app</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                            <v-list-tile-title class="subheading">Logout</v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+                </div>
             </v-list>
         </v-navigation-drawer>
         <v-toolbar color="red" dense fixed clipped-left app>
@@ -49,6 +63,7 @@
 </template>
 
 <script>
+import { role } from "@/libs/role"
 export default {
     props: {
         title: {
@@ -102,11 +117,20 @@ export default {
             }
         },
         isBlogger() {
-            if (this.$store.state.permission >= 255) {
+            if (this.$store.state.permission == role.administrator) {
                 return true;
             } else {
                 return false;
             }
+        },
+        logout() {
+            this.$store.commit("logout");
+            this.$cookie.delete("token");
+            this.$store.commit("showSnackbar", {
+                text: "Logout Success",
+                color: "success"
+            });
+            this.$router.push({name: "home"})
         },
     },
     computed: {
@@ -114,7 +138,7 @@ export default {
             return this.$store.state.username;
         },
         isResource() {
-            if (this.$store.state.permission >= 10) {
+            if (this.$store.state.permission >= role.advancedUser) {
                 return true
             } else {
                 return false

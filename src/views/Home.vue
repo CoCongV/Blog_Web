@@ -119,7 +119,7 @@ export default {
     },
     computed: {
         addArticlePermission() {
-            if (this.$store.state.permission >= 255) {
+            if (this.$store.state.permission >= 'advancedUser') {
                 return true;
             } else {
                 return false;

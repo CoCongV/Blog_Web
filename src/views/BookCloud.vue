@@ -86,6 +86,7 @@ import Toolbar from "@/components/Toolbar";
 import userAgent from "@/libs/userAgent";
 import Pagination from "@/components/Pagination";
 import { api } from "@/libs/api";
+import { role } from "@/libs/role";
 export default {
     data() {
         return {
@@ -123,14 +124,20 @@ export default {
             });
         },
         pushEmail(book) {
-            this.axios.put(api.bookPush.replace(':book_id', book.id)).then((response) => {
-                this.$store.commit("showSnackbar", {
-                    text: "Push Success",
-                    color: "success"
+            this.axios
+                .put(api.bookPush.replace(":book_id", book.id))
+                .then(response => {
+                    this.$store.commit("showSnackbar", {
+                        text: "Push Success",
+                        color: "success"
+                    });
                 })
-            }).catch((error) => {
-                this.$store.commit('showSnackbar', {text: error.response.data.message, color: 'error'})
-            })
+                .catch(error => {
+                    this.$store.commit("showSnackbar", {
+                        text: error.response.data.message,
+                        color: "error"
+                    });
+                });
         },
         getHoverAttr() {
             if (userAgent.isMobile()) {
@@ -140,7 +147,7 @@ export default {
             }
         },
         isResource() {
-            if (this.$store.state.permission >= 10) {
+            if (this.$store.state.permission >= role.advancedUser) {
                 return true;
             } else {
                 return false;
@@ -197,6 +204,12 @@ export default {
                 .then(response => {
                     this.books = response.data.books;
                     this.length = response.data.pages;
+                })
+                .catch(error => {
+                    this.$store.commit("showSnackbar", {
+                        text: error.response.data.message,
+                        color: "error"
+                    });
                 });
         },
         async loadSearchBooks(page, param) {
@@ -220,7 +233,7 @@ export default {
     },
     computed: {
         addResourcePermission() {
-            if (this.$store.state.permission >= 255) {
+            if (this.$store.state.permission >= role.administrator) {
                 return true;
             } else {
                 return false;
