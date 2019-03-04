@@ -19,7 +19,7 @@ export var api = {
     time: '/api/v1/posts/time/',
     comment: '/api/v1/comment/',
     token: '/api/v1/auth/token/',
-    emailAuth: '/api/v1/auth/send_email_auth/',
+    sendEmailAuth: '/api/v1/auth/send_email_auth/',
     password: '/api/v1/auth/password/',
     postPermission: '/api/v1/auth/post_permission/',
     emailExist: '/api/v1/auth/email_exist/',

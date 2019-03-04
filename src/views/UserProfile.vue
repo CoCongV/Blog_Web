@@ -8,7 +8,7 @@
                         :memberSince="memberSince" :location="location"
                         :email="email" style="margin-top: 15%" v-if="!editState"
                     >
-                        <v-btn slot="confirm" color="success" v-if="!confirmed">验证邮箱</v-btn>
+                        <v-btn slot="confirm" color="success" v-if="!confirmed" @click="comfirmEmail">验证邮箱</v-btn>
                     </profile-card>
                     <edit-card :initAvatar="avatar" :initUsername="username" :initAbout="about" ref="edit"
                         :initLocation="location" :initEmail="email" :initKindleEmail="kindle_email" v-if="editState" style="margin-top: 15%"
@@ -114,6 +114,15 @@ export default {
             if (this.$refs.edit.$refs.form.validate()) {
                 this.patchProfile()
             }
+        },
+        comfirmEmail () {
+            this.axios.get(api.sendEmailAuth)
+                .then((resposne) => {
+                this.$store.commit('showSnackbar', {text: '发送成功', color: 'success'})
+                })
+                .catch((error) => {
+                    tis.$store.comments('showSnackbar', {text: '发送失败', color: 'error'})
+                })
         }
     },
     mounted () {
