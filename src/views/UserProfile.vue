@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <toolbar :title="toolbarTitle"></toolbar>
-        <v-layout :align-center="alignCenter" justify-center column v-resize="onResize" v-if="!loading">
+        <v-layout :align-center="alignCenter" justify-center column v-resize="onResize" v-show="!loading">
             <v-flex xs12 md6 :class="flexClass">
                 <transition name="fade" mode="out-in">
                     <profile-card :avatar="avatar" :username="username" :about="about"
