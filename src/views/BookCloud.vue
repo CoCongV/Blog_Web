@@ -1,8 +1,8 @@
 <template>
     <v-app>
         <toolbar :title="toolbarTitle" ref="toolbar" @search="search"></toolbar>
-        <v-container class="bookContainer" fluid grid-list-md v-if="!loading">
-            <v-layout row wrap>
+        <v-container class="bookContainer" fluid grid-list-md>
+            <v-layout row wrap v-show="!loading">
                 <v-flex v-for="book in books" :key="book.id" xs12 md4>
                     <v-card>
                         <v-card-title primary-title>
@@ -31,6 +31,8 @@
                         </v-card-actions>
                     </v-card>
                 </v-flex>
+            </v-layout>
+            <v-layout row wrap v-if="!loading">
                 <v-flex xs12 md9 class="pagination">
                     <pagination :initPage="page" :length="length" @pageChange="bindPageChange"></pagination>
                 </v-flex>
