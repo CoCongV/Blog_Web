@@ -87,7 +87,7 @@ export default {
                     title: "Book Cloud",
                     click: () => {
                         if (this.isResource) {
-                            this.$router.push({name: "books"})
+                            this.$router.push({name: "books", params: {page: 1}})
                         } else {
                             this.$store.commit('showSnackbar', {'text': '权限被拒绝', color: 'error'})
                         }

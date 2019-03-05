@@ -1,5 +1,5 @@
 <template>
-    <v-card raised>
+    <v-card>
         <v-card-title primary-title>
             <div>
                 <h3 class="headline">Comments</h3>

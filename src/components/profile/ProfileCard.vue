@@ -1,5 +1,5 @@
 <template>
-    <v-card raised>
+    <v-card>
         <v-avatar size="125px" style="margin: 10px">
             <img class="img-circle elevation-7 mb1" :src="avatar">
         </v-avatar>

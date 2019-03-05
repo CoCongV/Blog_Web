@@ -16,6 +16,28 @@
                 </transition>
             </v-flex>
             <v-flex xs12 md6 :class="flexClass" style="margin-top: 10px">
+                <v-card>
+                    <v-card-title primary-title>
+                        <div>
+                            <h3 class="headline">Private</h3>
+                        </div>
+                    </v-card-title>
+                    <v-card-text>
+                        <v-list dense>
+                            <v-list-tile>
+                                <v-list-tile-action>
+                                    <v-icon>email</v-icon>
+                                </v-list-tile-action>
+                                <v-list-tile-content>
+                                    <v-list-tile-title class="subheading">Kindle E-mail</v-list-tile-title>
+                                    <v-list-tile-sub-title v-html="kindle_email"></v-list-tile-sub-title>
+                                </v-list-tile-content>
+                            </v-list-tile>
+                        </v-list>
+                    </v-card-text>
+                </v-card>
+            </v-flex>
+            <v-flex xs12 md6 :class="flexClass" style="margin-top: 10px">
                 <transition name="fade">
                     <comment-card :comments="comments" v-if="!editState"></comment-card>
                 </transition>

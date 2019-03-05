@@ -1,5 +1,5 @@
 <template>
-    <v-app dark>
+    <v-app>
         <toolbar :title="toolbarTitle" ref="toolbar" @search="search"></toolbar>
         <v-container class="bookContainer" fluid grid-list-md v-if="!loading">
             <v-layout row wrap>
@@ -11,6 +11,12 @@
                                 <br>
                                 <span>作者:&nbsp;</span>
                                 <span v-for="author in book.authors" :key="author">{{ author }}</span>
+                                <br>
+                                <span>格式:&nbsp;{{getFileType(book.file)}}</span>
+                                <br>
+                                <span>创建者:&nbsp;{{book.creator}}</span>
+                                <br>
+                                <span>上传时间:&nbsp;{{getDate(book.upload_time)}}</span>
                             </div>
                         </v-card-title>
                         <v-card-actions>
@@ -117,6 +123,10 @@ export default {
         pagination: Pagination
     },
     methods: {
+        getFileType(fileName) {
+            let fileSplit = fileName.split('.')
+            return fileSplit[fileSplit.length - 1]
+        },
         search() {
             this.$router.push({
                 name: "bookSearch",
@@ -124,6 +134,7 @@ export default {
             });
         },
         pushEmail(book) {
+            this.$store.commit('showCircleProgress')
             this.axios
                 .put(api.bookPush.replace(":book_id", book.id))
                 .then(response => {
@@ -137,7 +148,10 @@ export default {
                         text: error.response.data.message,
                         color: "error"
                     });
-                });
+                })
+                .finally(() => {
+                    this.$store.commit('hideCircleProgress')
+                })
         },
         getHoverAttr() {
             if (userAgent.isMobile()) {
@@ -233,7 +247,14 @@ export default {
                     this.books = response.data.books;
                     this.length = response.data.pages;
                 });
-        }
+        },
+        getDate(dateStr) {
+            let date = new Date(dateStr)
+            let day = date.getDate()
+            let month = date.getMonth() + 1;
+            let year = date.getFullYear();
+            return year + "-" + month + "-" + day
+        },
     },
     computed: {
         addResourcePermission() {
