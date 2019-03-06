@@ -126,8 +126,8 @@ export default {
     },
     methods: {
         getFileType(fileName) {
-            let fileSplit = fileName.split('.')
-            return fileSplit[fileSplit.length - 1]
+            let fileSplit = fileName.split(".");
+            return fileSplit[fileSplit.length - 1];
         },
         search() {
             this.$router.push({
@@ -136,7 +136,7 @@ export default {
             });
         },
         pushEmail(book) {
-            this.$store.commit('showCircleProgress')
+            this.$store.commit("showCircleProgress", "#f44336");
             this.axios
                 .put(api.bookPush.replace(":book_id", book.id))
                 .then(response => {
@@ -152,8 +152,8 @@ export default {
                     });
                 })
                 .finally(() => {
-                    this.$store.commit('hideCircleProgress')
-                })
+                    this.$store.commit("hideCircleProgress");
+                });
         },
         getHoverAttr() {
             if (userAgent.isMobile()) {
@@ -203,10 +203,13 @@ export default {
         },
         inputFile(newFile, oldFile) {},
         bindPageChange(page) {
-            this.$router.push({ name: this.$route.name, params: { page: page } });
+            this.$router.push({
+                name: this.$route.name,
+                params: { page: page }
+            });
         },
         async loadBooks(page) {
-            this.$store.commit('showCircleProgress')
+            this.$store.commit("showCircleProgress", "#f44336");
             this.loading = true;
             await this.getBooks(page);
             this.loading = false;
@@ -231,11 +234,11 @@ export default {
                 });
         },
         async loadSearchBooks(page, param) {
-            this.$store.commit('showCircleProgress')
-            this.loading = true
-            await this.getSearchBooks(page, param)
-            this.loading = false
-            this.$store.commit("hideCircleProgress")
+            this.$store.commit("showCircleProgress", "#f44336");
+            this.loading = true;
+            await this.getSearchBooks(page, param);
+            this.loading = false;
+            this.$store.commit("hideCircleProgress");
         },
         async getSearchBooks(page, param) {
             await this.axios
@@ -251,12 +254,12 @@ export default {
                 });
         },
         getDate(dateStr) {
-            let date = new Date(dateStr)
-            let day = date.getDate()
+            let date = new Date(dateStr);
+            let day = date.getDate();
             let month = date.getMonth() + 1;
             let year = date.getFullYear();
-            return year + "-" + month + "-" + day
-        },
+            return year + "-" + month + "-" + day;
+        }
     },
     computed: {
         addResourcePermission() {

@@ -9,6 +9,7 @@ export var api = {
     userComments: '/api/v1/user/comment/', // current user comment
     userAvatarUpload: '/api/v1/user/photo/',
     permission: '/api/v1/user/permission',
+    updatePermission: '/api/v1/auth/update_permission',
     // post api
     post: '/api/v1/posts/:id/',
     posts: '/api/v1/posts/',
