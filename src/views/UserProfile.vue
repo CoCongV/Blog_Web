@@ -110,8 +110,8 @@
             <v-card>
                 <v-card-title class="headline grey lighten-2">博主今年多少岁？</v-card-title>
                 <v-card-text>
-                    <v-radio-group>
-                        <v-radio v-for="n in answers" :key="n" :label="n" :value="n"></v-radio>
+                    <v-radio-group v-model="radioGroup">
+                        <v-radio v-for="n in answers" :key="n" :label="n" :value="answers.indexOf(n)"></v-radio>
                     </v-radio-group>
                 </v-card-text>
                 <v-card-actions>
@@ -153,7 +153,8 @@ export default {
             permission: 0,
             updatePermissionBtn: false,
             question: false,
-            answers: ['18', "18岁", "十八岁"]
+            answers: ['18', "18岁", "十八岁"],
+            radioGroup: 0
         };
     },
     components: {
