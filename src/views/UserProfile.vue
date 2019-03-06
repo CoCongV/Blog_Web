@@ -239,6 +239,7 @@ export default {
                     });
                     this.$store.state.permission = response.data.permission;
                     this.permission = response.data.permission
+                    this.updatePermissionBtn = false
                 })
                 .catch(error => {
                     this.$store.commit("showSnackbar", {
