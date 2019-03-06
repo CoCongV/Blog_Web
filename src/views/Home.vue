@@ -56,6 +56,7 @@ import ArticleList from "@/components/article/ArticleList";
 import Pagination from "@/components/Pagination";
 import userAgent from "@/libs/userAgent";
 import { api } from "@/libs/api";
+import { role } from "@/libs/role";
 
 export default {
     name: "home",
@@ -119,7 +120,7 @@ export default {
     },
     computed: {
         addArticlePermission() {
-            if (this.$store.state.permission >= 'advancedUser') {
+            if (this.$store.state.permission >= role.advancedUser) {
                 return true;
             } else {
                 return false;
