@@ -18,6 +18,7 @@ export default new Vuex.Store({
     bloggerID: '',
     circleProgress: false,
     overlay: false,
+    progressColor: "primary"
   },
   mutations: {
     showSnackbar (state, config) {
@@ -47,11 +48,13 @@ export default new Vuex.Store({
       state.aboutBlogger = blogger.about_me
       state.bloggerID = blogger.uid
     },
-    showCircleProgress(state) {
+    showCircleProgress(state, color = "primary") {
+      state.progressColor = color
       state.circleProgress = true
     },
     hideCircleProgress(state) {
       state.circleProgress = false
+      state.progressColor = "primary"
     },
     showOverlay(state) {
       state.overlay = true

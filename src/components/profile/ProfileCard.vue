@@ -1,5 +1,5 @@
 <template>
-    <v-card raised>
+    <v-card>
         <v-avatar size="125px" style="margin: 10px">
             <img class="img-circle elevation-7 mb1" :src="avatar">
         </v-avatar>
@@ -30,14 +30,10 @@
                         <v-list-tile-title class="subheading">E-mail</v-list-tile-title>
                         <v-list-tile-sub-title v-html="email"></v-list-tile-sub-title>
                     </v-list-tile-content>
+                    <slot name="confirm"></slot>
                 </v-list-tile>
             </v-list>
         </v-card-text>
-        <v-card-actions>
-            <v-layout align-center justify-end>
-                <slot name="confirm"></slot>
-            </v-layout>
-        </v-card-actions>
     </v-card>
 </template>
 

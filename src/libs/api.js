@@ -9,6 +9,7 @@ export var api = {
     userComments: '/api/v1/user/comment/', // current user comment
     userAvatarUpload: '/api/v1/user/photo/',
     permission: '/api/v1/user/permission',
+    updatePermission: '/api/v1/auth/update_permission',
     // post api
     post: '/api/v1/posts/:id/',
     posts: '/api/v1/posts/',
@@ -19,10 +20,16 @@ export var api = {
     time: '/api/v1/posts/time/',
     comment: '/api/v1/comment/',
     token: '/api/v1/auth/token/',
-    emailAuth: '/api/v1/auth/send_email_auth/',
+    sendEmailAuth: '/api/v1/auth/send_email_auth/',
     password: '/api/v1/auth/password/',
     postPermission: '/api/v1/auth/post_permission/',
     emailExist: '/api/v1/auth/email_exist/',
-    usernameExist: '/api/v1/auth/username_exist/'
+    usernameExist: '/api/v1/auth/username_exist/',
+    // Book
+    books: '/api/v1/books/',
+    book: '/api/v1/books/:book_id/',
+    bookSearch: '/api/v1/books/search/',
+    bookPush: '/api/v1/books/push/:book_id/',
+    booksCompletion: '/api/v1/books/completion/'
   }
   

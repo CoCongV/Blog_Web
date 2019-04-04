@@ -4,7 +4,7 @@
         <v-layout align-center justify-center row fill-height>
             <v-progress-circular
                 indeterminate
-                color="primary"
+                :color="color"
                 size="50"
                 v-if="show"
             ></v-progress-circular>
@@ -17,11 +17,13 @@ export default {
     data() {
         return {
             show: false,
+            color: ''
         }
     },
     computed: {
         bindVuex: function () {
             if (this.$store.state.circleProgress) {
+                this.color = this.$store.state.progressColor
                 this.show = true
                 this.$store.commit('showOverlay')
             } else {

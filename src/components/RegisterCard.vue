@@ -39,6 +39,7 @@ export default {
     methods: {
         submit () {
             if (this.$refs.form.validate()) {
+                this.$store.commit('showCircleProgress')
                 this.axios.post(api.user, {
                     email: this.email,
                     password: md5.hex(this.password),
@@ -46,9 +47,12 @@ export default {
                 }).then((response) => {
                     this.$store.commit('showSnackbar', {text: 'Register Success', color: 'success'})
                     this.$cookie.set('token', response.data.token, {expires: response.data.expiration + 's'})
+                    this.$store.commit('login', response.data)
                     this.$router.push({name: 'home'})
                 }).catch((error) => {
                     this.$store.commit('showSnackbar', {text: error.response.data.message, color: 'error'})
+                }).finally(() => {
+                    this.$store.commit('hideCircleProgress')
                 })
             }
         },

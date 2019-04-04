@@ -119,6 +119,7 @@
         background-size: cover;
         color: aliceblue;
         line-height: 3em;
+        box-shadow: 2px 0px 2px #2b2929;
     }
     .leftcol-mobile {
         height: auto;
@@ -128,7 +129,8 @@
         padding-top: 10px;
         color: aliceblue;
         line-height: 3em;
-        margin-bottom: 3px
+        margin-bottom: 3px;
+        box-shadow: 2px 0px 2px #2b2929;
     }
     .leftcol-mobile .item {
         margin: auto 3px
