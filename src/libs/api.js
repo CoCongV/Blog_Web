@@ -30,5 +30,6 @@ export var api = {
     book: '/api/v1/books/:book_id/',
     bookSearch: '/api/v1/books/search/',
     bookPush: '/api/v1/books/push/:book_id/',
+    booksCompletion: '/api/v1/books/completion/'
   }
   

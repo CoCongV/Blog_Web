@@ -3,7 +3,23 @@
         <toolbar :title="toolbarTitle" ref="toolbar" @search="search"></toolbar>
         <v-container class="bookContainer" fluid grid-list-md>
             <v-layout row wrap v-show="!loading">
-                <v-flex v-for="book in books" :key="book.id" xs12 md4>
+                <v-flex xs12 md4 v-show="showCompletion" align-center justify-center>
+                    <v-card>
+                        <template v-for="(item, index) in booksCompletionSrc">
+                            <v-list-tile :key="item.name" ripple>
+                                <v-list-tile-content>
+                                    <v-list-tile-title>{{item.name}}</v-list-tile-title>
+                                    <v-list-tile-sub-title class="text--primary">{{item.author}}</v-list-tile-sub-title>
+                                </v-list-tile-content>
+                                <v-list-tile-action>
+                                    <v-btn color="info" @click="inputBook(item)">导入</v-btn>
+                                </v-list-tile-action>
+                            </v-list-tile>
+                            <v-divider :key="index"></v-divider>
+                        </template>
+                    </v-card>
+                </v-flex>
+                <v-flex v-for="book in books" :key="book.id" xs12 md4 v-show="!showCompletion">
                     <v-card>
                         <v-card-title primary-title>
                             <div class="bookTitle">
@@ -32,7 +48,7 @@
                     </v-card>
                 </v-flex>
             </v-layout>
-            <v-layout row wrap v-if="!loading">
+            <v-layout row wrap v-if="!loading" v-show="!showCompletion">
                 <v-flex xs12 md9 class="pagination">
                     <pagination :initPage="page" :length="length" @pageChange="bindPageChange"></pagination>
                 </v-flex>
@@ -105,6 +121,7 @@ export default {
             books: [],
             upload: false,
             files: [],
+            showCompletion: false,
             headers: [
                 { text: "#", sortable: false },
                 { text: "Name", sortable: false },
@@ -117,7 +134,8 @@ export default {
             pagination: {},
             page: 1,
             length: 0,
-            searchParam: ""
+            searchParam: "",
+            booksCompletionSrc: []
         };
     },
     components: {
@@ -125,6 +143,21 @@ export default {
         pagination: Pagination
     },
     methods: {
+        inputBook(book) {
+            this.$store.commit("showCircleProgress", "#f44336");
+            console.log(book)
+            this.axios({
+                method: 'POST',
+                url: api.booksCompletion,
+                params: {
+                    name: book.name,
+                    url: book.url,
+                }
+            }).then(response => {
+                this.$store.commit("hideCircleProgress");
+                this.loadSearchBooks(1, book.name);
+            })
+        },
         getFileType(fileName) {
             let fileSplit = fileName.split(".");
             return fileSplit[fileSplit.length - 1];
@@ -239,6 +272,11 @@ export default {
             await this.getSearchBooks(page, param);
             this.loading = false;
             this.$store.commit("hideCircleProgress");
+            if (!this.books.length) {
+                this.showCompletion = true;
+            } else {
+                this.showCompletion = false;
+            }
         },
         async getSearchBooks(page, param) {
             await this.axios
@@ -310,6 +348,20 @@ export default {
                 this.loadSearchBooks(this.page, this.searchParam);
             }
             this.$vuetify.goTo(0);
+        },
+        showCompletion: function loadBookSource() {
+            console.log(this.showCompletion);
+            if (this.showCompletion) {
+                this.axios({
+                    url: api.booksCompletion,
+                    method: "GET",
+                    params: {
+                        name: this.searchParam
+                    }
+                }).then(response => {
+                    this.booksCompletionSrc = response.data.source;
+                });
+            }
         }
     }
 };
